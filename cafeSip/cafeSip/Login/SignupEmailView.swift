@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignupEmailView: View {
-    
+    @Environment(\.dismiss) var dismiss
     @State var email = ""
     
     var body: some View {
@@ -32,19 +32,31 @@ struct SignupEmailView: View {
                     .frame(height: 1)
                     .foregroundStyle(.gray.opacity(0.5))
             }.padding()
+            
+            Spacer()
+            
+            Button {
+                print("다음")
+            } label: {
+                Text("다음")
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .frame(width: 363, height: 42)
+                    .background(.brown)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+            }
+            
         }
-        
-        Spacer()
-        
-        Button {
-            print("다음")
-        } label: {
-             Text("다음")
-                .fontWeight(.semibold)
-                .foregroundStyle(.white)
-                .frame(width: 363, height: 42)
-                .background(.brown)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .tint(.black)
+                }
+            }
         }
     }
 }
