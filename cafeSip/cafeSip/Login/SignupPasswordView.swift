@@ -1,31 +1,31 @@
 //
-//  SignupEmailView.swift
+//  SignupPasswordView.swift
 //  cafeSip
 //
-//  Created by hyunMac on 12/15/24.
+//  Created by hyunMac on 12/16/24.
 //
 
 import SwiftUI
 
-struct SignupEmailView: View {
+struct SignupPasswordView: View {
     @Environment(\.dismiss) var dismiss
-    @State var email = ""
+    @State var password = ""
     
     var body: some View {
         VStack {
-            Text("이메일 주소 입력")
+            Text("비밀번호 만들기")
                 .font(.title)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             
-            Text("회원님이 사용하실 이메일 주소를 입력해 주세요. 이 이메일 주소는 다른 사람에게 공개되지 않습니다.")
+            Text("다른 사람이 추측할 수 없는 6자 이상의 문자 또는 숫자로 비밀번호를 만드세요.")
                 .font(.callout)
                 .frame(maxWidth: .infinity,alignment: .leading)
                 .padding(.horizontal)
             
             VStack {
-                TextField("이메일 주소", text: $email)
+                SecureField("비밀번호", text: $password)
                     .autocapitalization(.none)
                 
                 Rectangle()
@@ -35,8 +35,8 @@ struct SignupEmailView: View {
             
             Spacer()
             
-            NavigationLink {
-                SignupPasswordView()
+            Button {
+                print("다음")
             } label: {
                 Text("다음")
                     .fontWeight(.semibold)
@@ -61,5 +61,5 @@ struct SignupEmailView: View {
 }
 
 #Preview {
-    SignupEmailView()
+    SignupPasswordView()
 }
