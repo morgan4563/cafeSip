@@ -13,19 +13,19 @@ struct SignupUserNameView: View {
     
     var body: some View {
         VStack {
-            Text("비밀번호 만들기")
+            Text("사용자 이름 만들기")
                 .font(.title)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             
-            Text("다른 사람이 추측할 수 없는 6자 이상의 문자 또는 숫자로 비밀번호를 만드세요.")
+            Text("앱에서 사용할 사용자 이름을 추가해주세요. 언제든지 변경할 수 있습니다.")
                 .font(.callout)
                 .frame(maxWidth: .infinity,alignment: .leading)
                 .padding(.horizontal)
             
             VStack {
-                SecureField("비밀번호", text: $name)
+                SecureField("사용자 이름", text: $name)
                     .autocapitalization(.none)
                 
                 Rectangle()
@@ -35,8 +35,8 @@ struct SignupUserNameView: View {
             
             Spacer()
             
-            Button {
-                print("다음")
+            NavigationLink {
+                CompleteSingupView()
             } label: {
                 Text("다음")
                     .fontWeight(.semibold)

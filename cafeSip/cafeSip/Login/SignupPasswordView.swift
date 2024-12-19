@@ -35,8 +35,8 @@ struct SignupPasswordView: View {
             
             Spacer()
             
-            Button {
-                print("다음")
+            NavigationLink {
+                SignupUserNameView()
             } label: {
                 Text("다음")
                     .fontWeight(.semibold)
