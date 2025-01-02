@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct SignupUserNameView: View {
+    @Binding var navigationPath: NavigationPath
     @Environment(\.dismiss) var dismiss
-    @State var name = ""
+    @State var userName = ""
     
     var body: some View {
         VStack {
@@ -25,7 +26,7 @@ struct SignupUserNameView: View {
                 .padding(.horizontal)
             
             VStack {
-                SecureField("사용자 이름", text: $name)
+                SecureField("사용자 이름", text: $userName)
                     .autocapitalization(.none)
                 
                 Rectangle()
@@ -35,16 +36,15 @@ struct SignupUserNameView: View {
             
             Spacer()
             
-            NavigationLink {
-                CompleteSingupView()
-            } label: {
-                Text("다음")
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .frame(width: 363, height: 42)
-                    .background(.brown)
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
+            Button("다음") {
+                navigationPath.append("CompleteSignupView")
+                print(navigationPath)
             }
+            .fontWeight(.semibold)
+            .foregroundStyle(.white)
+            .frame(width: 363, height: 42)
+            .background(.brown)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
         }
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -61,6 +61,6 @@ struct SignupUserNameView: View {
 }
 
 #Preview {
-    SignupUserNameView()
+    SignupUserNameView(navigationPath: .constant(NavigationPath([""])))
 }
 

@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct CompleteSingupView: View {
+struct CompleteSignupView: View {
+    @Binding var userName: String
+    
     var body: some View {
         VStack {
             Text("아이디 생성완료.")
@@ -16,7 +18,7 @@ struct CompleteSingupView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             
-            Text("로그인 페이지로 돌아가서 로그인을 진행해주세요.")
+            Text("\(userName)님 로그인 페이지로 돌아가서 로그인을 진행해주세요.")
                 .font(.callout)
                 .frame(maxWidth: .infinity,alignment: .leading)
                 .padding(.horizontal)
@@ -40,5 +42,5 @@ struct CompleteSingupView: View {
 }
 
 #Preview {
-    CompleteSingupView()
+    CompleteSignupView(userName: .constant("닉네임"))
 }

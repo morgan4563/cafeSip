@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SignupEmailView: View {
+    @Binding var navigationPath: NavigationPath
     @Environment(\.dismiss) var dismiss
     @State var email = ""
     
@@ -35,16 +36,15 @@ struct SignupEmailView: View {
             
             Spacer()
             
-            NavigationLink {
-                SignupPasswordView()
-            } label: {
-                Text("다음")
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .frame(width: 363, height: 42)
-                    .background(.brown)
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
+            Button("다음") {
+                navigationPath.append("SignupPasswordView")
+                print(navigationPath)
             }
+            .fontWeight(.semibold)
+            .foregroundStyle(.white)
+            .frame(width: 363, height: 42)
+            .background(.brown)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
         }
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -61,5 +61,5 @@ struct SignupEmailView: View {
 }
 
 #Preview {
-    SignupEmailView()
+    SignupEmailView(navigationPath: .constant(NavigationPath([""])))
 }

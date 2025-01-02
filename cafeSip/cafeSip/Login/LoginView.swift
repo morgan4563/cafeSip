@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct LoginView: View {
-
+    @State private var navigationPath = NavigationPath()
     @State var email = ""
     @State var password = ""
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             VStack() {
                 Spacer()
                 
@@ -55,14 +55,14 @@ struct LoginView: View {
                     
                 }
                 
-                NavigationLink {
-                    SignupEmailView()
-                } label: {
-                    Text("회원가입")
-                        .font(.subheadline)
-                        .foregroundStyle(.brown)
-                        .padding()
+                Button("회원가입") {
+                    navigationPath.append("SignupEmailView")
+                    print("navigationPath: \(navigationPath)")
                 }
+                .font(.subheadline)
+                .foregroundStyle(.brown)
+                .padding()
+                
                 
                 Spacer()
                 
@@ -75,6 +75,18 @@ struct LoginView: View {
                         .frame(width: 363, height: 42)
                         .background(.brown)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
+                }
+            }
+            .navigationDestination(for: String.self) { value in
+                switch value {
+                case "SignupEmailView":
+                    SignupEmailView(navigationPath: $navigationPath)
+                case "SignupPasswordView":
+                    SignupPasswordView(navigationPath: $navigationPath)
+                case "SignupUserNameView":
+                    SignupUserNameView(navigationPath: $navigationPath)
+                default:
+                    Text("잘못된 접근")
                 }
             }
         }

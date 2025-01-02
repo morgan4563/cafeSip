@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SignupPasswordView: View {
+    @Binding var navigationPath: NavigationPath
     @Environment(\.dismiss) var dismiss
     @State var password = ""
     
@@ -35,16 +36,15 @@ struct SignupPasswordView: View {
             
             Spacer()
             
-            NavigationLink {
-                SignupUserNameView()
-            } label: {
-                Text("다음")
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .frame(width: 363, height: 42)
-                    .background(.brown)
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
+            Button("다음") {
+                navigationPath.append("SignupUserNameView")
+                print(navigationPath)
             }
+            .fontWeight(.semibold)
+            .foregroundStyle(.white)
+            .frame(width: 363, height: 42)
+            .background(.brown)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
         }
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -61,5 +61,5 @@ struct SignupPasswordView: View {
 }
 
 #Preview {
-    SignupPasswordView()
+    SignupPasswordView(navigationPath: .constant(NavigationPath([""])))
 }
