@@ -11,6 +11,7 @@ import SwiftUI
 class LoginViewModel {
     var email = ""
     var password = ""
+    var userName = ""
     var navigationPath = NavigationPath()
     
     func goToSignupEmailView() {

@@ -10,7 +10,6 @@ import SwiftUI
 struct SignupUserNameView: View {
     @Binding var loginViewModel: LoginViewModel
     @Environment(\.dismiss) var dismiss
-    @State var userName = ""
     
     var body: some View {
         VStack {
@@ -26,7 +25,7 @@ struct SignupUserNameView: View {
                 .padding(.horizontal)
             
             VStack {
-                SecureField("사용자 이름", text: $userName)
+                TextField("사용자 이름", text: $loginViewModel.userName)
                     .autocapitalization(.none)
                 
                 Rectangle()

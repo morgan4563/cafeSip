@@ -10,7 +10,6 @@ import SwiftUI
 struct SignupEmailView: View {
     @Binding var loginViewModel: LoginViewModel
     @Environment(\.dismiss) var dismiss
-    @State var email = ""
     
     var body: some View {
         VStack {
@@ -26,7 +25,7 @@ struct SignupEmailView: View {
                 .padding(.horizontal)
             
             VStack {
-                TextField("이메일 주소", text: $email)
+                TextField("이메일 주소", text: $loginViewModel.email)
                     .autocapitalization(.none)
                 
                 Rectangle()
