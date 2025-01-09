@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignupUserNameView: View {
-    @Binding var navigationPath: NavigationPath
+    @Binding var loginViewModel: LoginViewModel
     @Environment(\.dismiss) var dismiss
     @State var userName = ""
     
@@ -37,8 +37,7 @@ struct SignupUserNameView: View {
             Spacer()
             
             Button("다음") {
-                navigationPath.append("CompleteSignupView")
-                print(navigationPath)
+                loginViewModel.goToCompleteSignupView()
             }
             .fontWeight(.semibold)
             .foregroundStyle(.white)
@@ -60,7 +59,6 @@ struct SignupUserNameView: View {
     }
 }
 
-#Preview {
-    SignupUserNameView(navigationPath: .constant(NavigationPath([""])))
-}
-
+//#Preview {
+//    SignupUserNameView(navigationPath: .constant(NavigationPath([""])))
+//}

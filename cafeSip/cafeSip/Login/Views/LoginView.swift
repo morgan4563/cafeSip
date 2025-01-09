@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var navigationPath = NavigationPath()
-    @State var email = ""
-    @State var password = ""
+    @State private var loginViewModel = LoginViewModel()
     
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        NavigationStack(path: $loginViewModel.navigationPath) {
             VStack() {
                 Spacer()
                 
@@ -37,7 +35,7 @@ struct LoginView: View {
                         .padding(.horizontal)
                         .padding(.bottom, 12)
                     
-                    TextField("이메일", text: $email)
+                    TextField("이메일", text: $loginViewModel.email)
                         .autocapitalization(.none)
                         .padding(.horizontal)
                     Rectangle()
@@ -45,7 +43,7 @@ struct LoginView: View {
                         .foregroundStyle(.gray.opacity(0.5))
                         .padding(.horizontal)
                     
-                    SecureField("비밀번호", text: $password)
+                    SecureField("비밀번호", text: $loginViewModel.password)
                         .padding(.horizontal)
                     Rectangle()
                         .frame(height: 1)
@@ -56,8 +54,7 @@ struct LoginView: View {
                 }
                 
                 Button("회원가입") {
-                    navigationPath.append("SignupEmailView")
-                    print("navigationPath: \(navigationPath)")
+                    loginViewModel.goToSignupEmailView()
                 }
                 .font(.subheadline)
                 .foregroundStyle(.brown)
@@ -68,6 +65,7 @@ struct LoginView: View {
                 
                 Button {
                     print("로그인")
+                    print(loginViewModel.navigationPath)
                 } label: {
                     Text("로그인")
                         .fontWeight(.semibold)
@@ -77,14 +75,17 @@ struct LoginView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
             }
+            // 화면 전환 담당
             .navigationDestination(for: String.self) { value in
                 switch value {
                 case "SignupEmailView":
-                    SignupEmailView(navigationPath: $navigationPath)
+                    SignupEmailView(loginViewModel: $loginViewModel)
                 case "SignupPasswordView":
-                    SignupPasswordView(navigationPath: $navigationPath)
+                    SignupPasswordView(loginViewModel: $loginViewModel)
                 case "SignupUserNameView":
-                    SignupUserNameView(navigationPath: $navigationPath)
+                    SignupUserNameView(loginViewModel: $loginViewModel)
+                case "CompleteSignupView":
+                    CompleteSignupView(loginViewModel: $loginViewModel)
                 default:
                     Text("잘못된 접근")
                 }

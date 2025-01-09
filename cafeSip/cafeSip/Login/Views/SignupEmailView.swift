@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignupEmailView: View {
-    @Binding var navigationPath: NavigationPath
+    @Binding var loginViewModel: LoginViewModel
     @Environment(\.dismiss) var dismiss
     @State var email = ""
     
@@ -37,8 +37,7 @@ struct SignupEmailView: View {
             Spacer()
             
             Button("다음") {
-                navigationPath.append("SignupPasswordView")
-                print(navigationPath)
+                loginViewModel.goToSignupPasswordView()
             }
             .fontWeight(.semibold)
             .foregroundStyle(.white)
@@ -60,6 +59,6 @@ struct SignupEmailView: View {
     }
 }
 
-#Preview {
-    SignupEmailView(navigationPath: .constant(NavigationPath([""])))
-}
+//#Preview {
+//    
+//}
