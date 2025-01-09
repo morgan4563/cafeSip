@@ -14,6 +14,10 @@ class LoginViewModel {
     var userName = ""
     var navigationPath = NavigationPath()
     
+    func signUp(userData: User) {
+        
+    }
+    
     func goToSignupEmailView() {
         navigationPath.append("SignupEmailView")
     }
@@ -29,5 +33,4 @@ class LoginViewModel {
     func goToLoginView() {
         navigationPath = NavigationPath()
     }
-
 }
