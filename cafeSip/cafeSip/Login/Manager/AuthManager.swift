@@ -9,9 +9,11 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
+@Observable
 class AuthManager {
     static let shared = AuthManager()
     var currentAuthUser: FirebaseAuth.User?
+    var currentUser: User?
     
     func createUser(email: String, password: String, userName: String) async {
         print(email,password,userName)
@@ -35,9 +37,29 @@ class AuthManager {
         
         do {
             let encodedUser = try Firestore.Encoder().encode(user)
-            try await Firestore.firestore().collection("user").document(user.id).setData(encodedUser)
+            try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
         } catch {
             print("Failed to upload user data")
+        }
+    }
+    
+    func signIn(email: String, password: String) async {
+        do {
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            currentAuthUser = result.user
+            
+            await loadCurrentUserData()
+        } catch {
+            print("Failed to signIn")
+        }
+    }
+    
+    func loadCurrentUserData() async {
+        guard let userId = currentAuthUser?.uid else { return }
+        do {
+            currentUser = try await Firestore.firestore().collection("users").document(userId).getDocument(as: User.self)
+        } catch {
+            print("Failed to load CurrentUserData")
         }
     }
 }

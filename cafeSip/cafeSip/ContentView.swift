@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var loginViewModel = LoginViewModel()
+    
     var body: some View {
-        VStack {
+        if AuthManager.shared.currentUser == nil {
+            LoginView(loginViewModel: $loginViewModel)
+        } else {
             MainTabView()
         }
     }

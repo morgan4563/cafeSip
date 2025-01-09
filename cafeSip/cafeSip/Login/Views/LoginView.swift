@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var loginViewModel = LoginViewModel()
+    @Binding var loginViewModel: LoginViewModel
     
     var body: some View {
         NavigationStack(path: $loginViewModel.navigationPath) {
@@ -64,8 +64,9 @@ struct LoginView: View {
                 Spacer()
                 
                 Button {
-                    print("로그인")
-                    print(loginViewModel.navigationPath)
+                    Task {
+                        await loginViewModel.signIn()
+                    }
                 } label: {
                     Text("로그인")
                         .fontWeight(.semibold)
@@ -94,6 +95,6 @@ struct LoginView: View {
     }
 }
 
-#Preview {
-    LoginView()
-}
+//#Preview {
+//    LoginView(loginViewModel: .constant(LoginViewModel()))
+//}
