@@ -16,11 +16,6 @@ struct LoginView: View {
                 Spacer()
                 
                 VStack(alignment: .leading, spacing: 12) {
-                    Image("cafeSipLogo")
-                        .resizable()
-                        .frame(width: 60,height: 60)
-                        .padding(.horizontal)
-                    
                     Text("""
                     안녕하세요.
                     cafeSip입니다.

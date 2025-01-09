@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		92546A172D306A0700DDA373 /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 92546A162D306A0700DDA373 /* NMapsMap */; };
 		9278E3022D2FD4AF001ECC9F /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9278E3012D2FD4AF001ECC9F /* FirebaseCore */; };
 		9278E3042D2FD4FD001ECC9F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9278E3032D2FD4FD001ECC9F /* FirebaseAuth */; };
 		9278E3062D2FD506001ECC9F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9278E3052D2FD506001ECC9F /* FirebaseFirestore */; };
@@ -17,9 +18,22 @@
 		92BE68E42D08E99000730BE6 /* cafeSip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cafeSip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		92546A192D306A3200DDA373 /* Exceptions for "cafeSip" folder in "cafeSip" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 92BE68E32D08E99000730BE6 /* cafeSip */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		92BE68E62D08E99000730BE6 /* cafeSip */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				92546A192D306A3200DDA373 /* Exceptions for "cafeSip" folder in "cafeSip" target */,
+			);
 			path = cafeSip;
 			sourceTree = "<group>";
 		};
@@ -32,6 +46,7 @@
 			files = (
 				9278E3022D2FD4AF001ECC9F /* FirebaseCore in Frameworks */,
 				9278E3082D2FD511001ECC9F /* FirebaseStorage in Frameworks */,
+				92546A172D306A0700DDA373 /* NMapsMap in Frameworks */,
 				9278E3042D2FD4FD001ECC9F /* FirebaseAuth in Frameworks */,
 				9278E3062D2FD506001ECC9F /* FirebaseFirestore in Frameworks */,
 			);
@@ -88,6 +103,7 @@
 				9278E3032D2FD4FD001ECC9F /* FirebaseAuth */,
 				9278E3052D2FD506001ECC9F /* FirebaseFirestore */,
 				9278E3072D2FD511001ECC9F /* FirebaseStorage */,
+				92546A162D306A0700DDA373 /* NMapsMap */,
 			);
 			productName = cafeSip;
 			productReference = 92BE68E42D08E99000730BE6 /* cafeSip.app */;
@@ -119,6 +135,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				9278E2B72D2FCFD9001ECC9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				92546A152D306A0700DDA373 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 92BE68E52D08E99000730BE6 /* Products */;
@@ -280,6 +297,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"cafeSip/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = cafeSip/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -308,6 +326,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"cafeSip/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = cafeSip/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -350,6 +369,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		92546A152D306A0700DDA373 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.20.0;
+			};
+		};
 		9278E2B72D2FCFD9001ECC9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -361,6 +388,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		92546A162D306A0700DDA373 /* NMapsMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92546A152D306A0700DDA373 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
+			productName = NMapsMap;
+		};
 		9278E3012D2FD4AF001ECC9F /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9278E2B72D2FCFD9001ECC9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
