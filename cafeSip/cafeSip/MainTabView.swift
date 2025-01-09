@@ -27,7 +27,7 @@ struct MainTabView: View {
                     Image(systemName: "mug.fill")
                 }
                 .tag(2)
-            Text("other")
+            OtherView()
                 .tabItem {
                     Image(systemName: "ellipsis")
                 }
