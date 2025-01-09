@@ -27,7 +27,9 @@ struct CompleteSignupView: View {
             Spacer()
             
             Button {
-                
+                Task {
+                    await loginViewModel.createUser()
+                }
                 loginViewModel.goToLoginView()
             } label: {
                 Text("완료")

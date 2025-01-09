@@ -14,8 +14,8 @@ class LoginViewModel {
     var userName = ""
     var navigationPath = NavigationPath()
     
-    func signUp(userData: User) {
-        
+    func createUser() async {
+        await AuthManager.shared.createUser(email: email, password: password, userName: userName)
     }
     
     func goToSignupEmailView() {
