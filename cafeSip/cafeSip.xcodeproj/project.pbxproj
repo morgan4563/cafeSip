@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		92546A172D306A0700DDA373 /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 92546A162D306A0700DDA373 /* NMapsMap */; };
-		92546AEC2D31BED100DDA373 /* NaverCloudPlatformKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92546AEB2D31BE9400DDA373 /* NaverCloudPlatformKey.swift */; };
 		9278E3022D2FD4AF001ECC9F /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9278E3012D2FD4AF001ECC9F /* FirebaseCore */; };
 		9278E3042D2FD4FD001ECC9F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9278E3032D2FD4FD001ECC9F /* FirebaseAuth */; };
 		9278E3062D2FD506001ECC9F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9278E3052D2FD506001ECC9F /* FirebaseFirestore */; };
@@ -16,7 +15,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		92546AEB2D31BE9400DDA373 /* NaverCloudPlatformKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverCloudPlatformKey.swift; sourceTree = "<group>"; };
 		92BE68E42D08E99000730BE6 /* cafeSip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cafeSip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -67,7 +65,6 @@
 		92BE68DB2D08E99000730BE6 = {
 			isa = PBXGroup;
 			children = (
-				92546AEB2D31BE9400DDA373 /* NaverCloudPlatformKey.swift */,
 				92BE68E62D08E99000730BE6 /* cafeSip */,
 				9278E3002D2FD4AF001ECC9F /* Frameworks */,
 				92BE68E52D08E99000730BE6 /* Products */,
@@ -165,7 +162,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92546AEC2D31BED100DDA373 /* NaverCloudPlatformKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
