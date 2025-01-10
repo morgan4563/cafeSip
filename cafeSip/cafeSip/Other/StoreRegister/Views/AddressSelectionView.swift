@@ -54,10 +54,7 @@ struct AddressSelectionView: View {
 
 struct NaverMapView: UIViewRepresentable {
     func makeUIView(context: Context) -> some UIView {
-        let mapView = NMFMapView(frame: .zero)
-        
-        mapView.positionMode = .direction
-        mapView.zoomLevel = 10
+        let mapView = NMFNaverMapView(frame: .zero)
         return mapView
     }
     
