@@ -24,9 +24,20 @@ struct AddressSelectionView: View {
                 .padding(.horizontal)
             
             Divider()
+            ZStack {
+                NaverMapView()
+                    .frame(maxWidth: .infinity)
+                Image(systemName: "mappin")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+                    .foregroundStyle(.brown)
+                    .shadow(color: .white, radius: 1)
+            }
+            Button("주소값 알기 테스트") {
+                
+            }
             
-            NaverMapView()
-                .frame(maxWidth: .infinity)
             Rectangle()
                 .fill(.white)
                 .frame(maxWidth: .infinity, maxHeight: 50)
@@ -55,6 +66,7 @@ struct AddressSelectionView: View {
 struct NaverMapView: UIViewRepresentable {
     func makeUIView(context: Context) -> some UIView {
         let mapView = NMFNaverMapView(frame: .zero)
+        
         return mapView
     }
     
