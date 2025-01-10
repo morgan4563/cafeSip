@@ -96,6 +96,29 @@ struct ReverseGeocodingRequest {
         
         return request
     }
+    
+    func sendRequest() {
+        guard let request = makeRequest() else {
+            print("Failed to create request")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: request) {data, response, error in
+            if let error = error {
+                print("URLSessionError")
+                return
+            }
+            
+            guard let data = data else {
+                print("Data not received")
+                return
+            }
+            
+            
+            
+        }
+    }
+    
 }
 
 struct NaverMapView: UIViewRepresentable {
