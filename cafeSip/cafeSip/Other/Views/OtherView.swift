@@ -9,39 +9,40 @@ import SwiftUI
 
 struct OtherView: View {
     var body: some View {
-        
         NavigationStack {
-            VStack {
-                HStack {
-                    Text("Other")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundStyle(.black)
-                        .padding()
-                    
-                    Spacer()
-                }
+            VStack(alignment: .leading) {
+                Text("Other")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.black)
+                    .padding()
                 
                 Divider()
                 
-                HStack {
-                    Text("매장 관리")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .padding()
-                    Spacer()
+                Text("매장 관리")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 4)
+                
+                
+                NavigationLink {
+                    AddressSelectionView()
+                } label: {
+                    HStack {
+                        Image(systemName: "house.circle.fill")
+                        Text("매장 등록하기")
+                    }
+                    .padding(.horizontal, 16)
+                    .foregroundStyle(.black)
+                    .opacity(0.8)
                 }
                 
-                HStack {
-                    NavigationLink {
-                        AddressSelectionView()
-                    } label: {
-                        Text("주소로 매장 설정하기")
-                    }
-                }
                 
                 Spacer()
             }
+            
+            Spacer()
         }
     }
 }

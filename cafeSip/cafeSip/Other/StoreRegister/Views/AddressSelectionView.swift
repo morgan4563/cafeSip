@@ -9,30 +9,45 @@ import SwiftUI
 import NMapsMap
 
 struct AddressSelectionView: View {
+    @State var address = "서울시 용산구 땡땡로"
     var body: some View {
         VStack {
+            Text("매장 등록")
+                .font(.title)
+                .fontWeight(.semibold)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
+            
+            Text("영업중인 매장을 등록합니다. 지도를 통해서 주소확인후 해당 주소로 설정을 통해 상세 주소를 입력해 주세요.")
+                .font(.callout)
+                .frame(maxWidth: .infinity,alignment: .leading)
+                .padding(.horizontal)
+            
+            Divider()
+            
             NaverMapView()
-                .frame(width: .infinity, height: 600)
+                .frame(maxWidth: .infinity)
             Rectangle()
                 .fill(.white)
-                .frame(width: .infinity, height: .infinity)
-                .overlay() {
-                    VStack {
-                        Text("주소주소주소주소주소주소")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundStyle(.black)
-                        Button("이 위치로 주소 등록") {
-                            
-                        }
+                .frame(maxWidth: .infinity, maxHeight: 50)
+                .overlay(alignment: .leading) {
+                    Text(address)
+                        .font(.title2)
                         .fontWeight(.semibold)
-                        .foregroundStyle(.white)
-                        .frame(width: 363, height: 42)
-                        .background(.brown)
-                        .clipShape(Rectangle())
-                    }
-                    
+                        .padding()
                 }
+            
+            NavigationLink {
+                AddressSelectionView()
+            } label: {
+                Text("해당 주소로 설정")
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .frame(width: 363, height: 42)
+                    .background(.brown)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+            }
+            
         }
     }
 }
