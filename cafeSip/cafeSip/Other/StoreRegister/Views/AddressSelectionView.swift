@@ -59,6 +59,10 @@ struct AddressSelectionView: View {
     }
 }
 
+//class GeocodingAPI {
+//    private let baseURL
+//}
+
 struct NaverMapView: UIViewRepresentable {
     @Binding var address: String
     
@@ -75,6 +79,8 @@ struct NaverMapView: UIViewRepresentable {
             let lng = position.lng
 
             parent.address = "위도: \(lat), 경도: \(lng)"
+            print("위도: \(lat), 경도: \(lng)")
+            
         }
     }
     
