@@ -25,7 +25,7 @@ struct AddressSelectionView: View {
             
             Divider()
             ZStack {
-                NaverMapView()
+                NaverMapView(address: $address)
                     .frame(maxWidth: .infinity)
                 Image(systemName: "mappin")
                     .resizable()
@@ -33,9 +33,6 @@ struct AddressSelectionView: View {
                     .frame(width: 50, height: 50)
                     .foregroundStyle(.brown)
                     .shadow(color: .white, radius: 1)
-            }
-            Button("주소값 알기 테스트") {
-                
             }
             
             Rectangle()
@@ -63,15 +60,31 @@ struct AddressSelectionView: View {
 }
 
 struct NaverMapView: UIViewRepresentable {
+    @Binding var address: String
+    
     class Coordinator: NSObject, NMFMapViewCameraDelegate {
+        var parent: NaverMapView
+        
+        init(parent: NaverMapView) {
+            self.parent = parent
+        }
+        
+        func mapViewCameraIdle(_ mapView: NMFMapView) {
+            let position = mapView.cameraPosition.target
+            let lat = position.lat
+            let lng = position.lng
+
+            parent.address = "위도: \(lat), 경도: \(lng)"
+        }
     }
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator()
+        return Coordinator(parent: self)
     }
     
     func makeUIView(context: Context) -> some UIView {
         let mapView = NMFNaverMapView(frame: .zero)
+        mapView.mapView.addCameraDelegate(delegate: context.coordinator)
         return mapView
     }
     
