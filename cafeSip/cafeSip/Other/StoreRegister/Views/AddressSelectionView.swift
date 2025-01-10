@@ -59,9 +59,44 @@ struct AddressSelectionView: View {
     }
 }
 
-//class GeocodingAPI {
-//    private let baseURL
-//}
+struct ReverseGeocodingRequest {
+    private let baseURL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc"
+    let position: NMGLatLng
+    
+    init(position: NMGLatLng) {
+        self.position = position
+    }
+    
+    func makeURL() -> URL? {
+        var urlComponents = URLComponents(string: baseURL)
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "request", value: "coordsToaddr"),
+            URLQueryItem(name: "coords", value: "\(position.lng),\(position.lat)"),
+            URLQueryItem(name: "sourcecrs", value: "epsg:4326"),
+            URLQueryItem(name: "orders", value: "roadaddr,addr"),
+            URLQueryItem(name: "output", value: "json")
+        ]
+        guard let url = urlComponents?.url else {
+            print("Failed to create URL")
+            return nil
+        }
+        return url
+    }
+    
+    func makeRequest() -> URLRequest? {
+        guard let url = makeURL() else {
+            print("Failed to create Request")
+            return nil
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        request.addValue(NaverCloudPlatformKey.clientId, forHTTPHeaderField: "X-NCP-APIGW-API-KEY-ID")
+        request.addValue(NaverCloudPlatformKey.clientSecret, forHTTPHeaderField: "X-NCP-APIGW-API-KEY")
+        
+        return request
+    }
+}
 
 struct NaverMapView: UIViewRepresentable {
     @Binding var address: String
