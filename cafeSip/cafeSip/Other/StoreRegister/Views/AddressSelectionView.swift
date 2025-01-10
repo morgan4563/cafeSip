@@ -58,22 +58,26 @@ struct AddressSelectionView: View {
                     .background(.brown)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
             }
-            
         }
     }
 }
 
 struct NaverMapView: UIViewRepresentable {
+    class Coordinator: NSObject, NMFMapViewCameraDelegate {
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator()
+    }
+    
     func makeUIView(context: Context) -> some UIView {
         let mapView = NMFNaverMapView(frame: .zero)
-        
         return mapView
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
         
     }
-    
 }
 
 #Preview {
