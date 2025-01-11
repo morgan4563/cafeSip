@@ -40,7 +40,7 @@ struct AddressSelectionView: View {
                 .frame(maxWidth: .infinity, maxHeight: 50)
                 .overlay(alignment: .leading) {
                     Text(address)
-                        .font(.title2)
+                        .font(.body)
                         .fontWeight(.semibold)
                         .padding()
                 }
@@ -117,10 +117,21 @@ struct ReverseGeocodingRequest {
             do {
                 let decodedResponse = try JSONDecoder().decode(ReverseGeocodingResponse.self, from: data)
                 if let result = decodedResponse.results.first {
-                    let address = "\(result.region.area1.name) \(result.region.area2.name) \(result.region.area3.name) \(result.region.area4.name) \(result.land.number1) \(result.land.number2)"
-                    if result.land.name != nil {
-                        print(result.land.name)
+                    var address = "\(result.region.area1.name) \(result.region.area2.name) \(result.region.area3.name)"
+                    
+                    if result.region.area4.name != "" {
+                        address += " \(result.region.area4.name)"
                     }
+                    if let landName = result.land.name {
+                        address += " \(landName)"
+                    }
+                    
+                    if result.land.number1 != "" && result.land.number2 != "" {
+                        address += " \(result.land.number1)-\(result.land.number2)"
+                    }else if result.land.number1 != "" {
+                        address += " \(result.land.number1)"
+                    }
+                    
                     return completion(address)
                 }
                 
