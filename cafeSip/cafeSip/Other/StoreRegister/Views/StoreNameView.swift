@@ -1,5 +1,5 @@
 //
-//  AddressDetailView.swift
+//  StoreNameView.swift
 //  cafeSip
 //
 //  Created by hyunMac on 1/12/25.
@@ -7,33 +7,22 @@
 
 import SwiftUI
 
-struct AddressDetailView: View {
+struct StoreNameView: View {
     @Binding var viewModel: AddressSelectionViewModel
     var body: some View {
         VStack {
-            Text("상세 주소 입력")
+            Text("매장 이름")
                 .font(.title)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             
-            Text("상세 주소를 입력후 해당 주소로 설정을 통해 주소 등록을 마무리 해주세요.")
+            Text("매장의 이름을 설정해주세요")
                 .font(.callout)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             
-            Divider()
-            
-            Text(viewModel.address)
-                .font(.title2)
-                .fontWeight(.semibold)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
-            
-            TextField("상세 주소를 입력하세요", text: $viewModel.detailAddress)
-                .font(.title3)
-                .fontWeight(.semibold)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            TextField("매장 이름",text: $viewModel.storeName)
                 .padding(.horizontal)
             Rectangle()
                 .frame(height: 1)
@@ -41,12 +30,11 @@ struct AddressDetailView: View {
                 .padding(.horizontal)
             
             Spacer()
-   
             
             NavigationLink {
-                // 다음 View
+                AddressSelectionView()
             } label: {
-                Text("해당 주소로 설정")
+                Text("매장 등록 완료")
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
                     .frame(width: 363, height: 42)
@@ -58,5 +46,5 @@ struct AddressDetailView: View {
 }
 
 #Preview {
-    AddressDetailView(viewModel: .constant(AddressSelectionViewModel()))
+    StoreNameView(viewModel: .constant(AddressSelectionViewModel()))
 }
