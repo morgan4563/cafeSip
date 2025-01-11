@@ -5,7 +5,7 @@
 //  Created by hyunMac on 1/11/25.
 //
 
-struct ReverseGeocodingResponse: Codable {
+struct ReverseGeocodingResponseModel: Codable {
     let status: Status
     let results: [Result]
 }

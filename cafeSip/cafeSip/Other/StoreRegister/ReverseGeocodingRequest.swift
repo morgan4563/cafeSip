@@ -63,7 +63,7 @@ struct ReverseGeocodingRequest {
             }
             
             do {
-                let decodedResponse = try JSONDecoder().decode(ReverseGeocodingResponse.self, from: data)
+                let decodedResponse = try JSONDecoder().decode(ReverseGeocodingResponseModel.self, from: data)
                 if let result = decodedResponse.results.first {
                     var address = "\(result.region.area1.name) \(result.region.area2.name) \(result.region.area3.name)"
                     
