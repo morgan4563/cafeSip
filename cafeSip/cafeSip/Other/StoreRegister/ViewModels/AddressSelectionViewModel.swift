@@ -10,6 +10,7 @@ import NMapsMap
 @Observable
 class AddressSelectionViewModel {
     var address = "주소 정보를 수집중입니다."
+    var detailAddress = ""
     
     func getRoadAddress(from: NMGLatLng) {
         let reverseGeocodingResponse = ReverseGeocodingRequest(position: from)
