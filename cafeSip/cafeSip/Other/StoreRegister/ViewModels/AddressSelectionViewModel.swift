@@ -11,7 +11,7 @@ import NMapsMap
 class AddressSelectionViewModel {
     var address = "주소 정보를 수집중입니다."
     
-    func getLoadAddress(from: NMGLatLng) {
+    func getRoadAddress(from: NMGLatLng) {
         let reverseGeocodingResponse = ReverseGeocodingRequest(position: from)
         reverseGeocodingResponse.sendRequest(completion: { address in
             guard let addressResult = address else {

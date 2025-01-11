@@ -19,7 +19,7 @@ struct NaverMapView: UIViewRepresentable {
         
         func mapViewCameraIdle(_ mapView: NMFMapView) {
             let position = mapView.cameraPosition.target
-            parent.viewModel.getLoadAddress(from: position)
+            parent.viewModel.getRoadAddress(from: position)
         }
     }
     
