@@ -125,6 +125,7 @@ struct ReverseGeocodingRequest {
                 print("JSON decoding error")
             }
         }
+        task.resume()
     }
 }
 
@@ -140,11 +141,6 @@ struct NaverMapView: UIViewRepresentable {
         
         func mapViewCameraIdle(_ mapView: NMFMapView) {
             let position = mapView.cameraPosition.target
-//            let lat = position.lat
-//            let lng = position.lng
-//
-//            parent.address = "위도: \(lat), 경도: \(lng)"
-//            print("위도: \(lat), 경도: \(lng)")
             let reverseGeocodingResponse = ReverseGeocodingRequest(position: position)
             reverseGeocodingResponse.sendRequest(completion: { address in
                 guard let addressResult = address else {
