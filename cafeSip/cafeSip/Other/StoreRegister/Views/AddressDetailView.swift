@@ -44,7 +44,7 @@ struct AddressDetailView: View {
    
             
             NavigationLink {
-                // 다음 View
+                StoreNameView(viewModel: $viewModel)
             } label: {
                 Text("해당 주소로 설정")
                     .fontWeight(.semibold)

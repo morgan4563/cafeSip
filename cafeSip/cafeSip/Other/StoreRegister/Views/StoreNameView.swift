@@ -32,7 +32,7 @@ struct StoreNameView: View {
             Spacer()
             
             NavigationLink {
-                AddressSelectionView()
+                // 매장 등록 완료 화면으로 이동
             } label: {
                 Text("매장 등록 완료")
                     .fontWeight(.semibold)
