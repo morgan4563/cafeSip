@@ -61,6 +61,7 @@ struct Land: Codable {
     let addition2: Addition
     let addition3: Addition
     let addition4: Addition
+    let name: String?
     let coords: Coords
 }
 

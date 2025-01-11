@@ -117,7 +117,10 @@ struct ReverseGeocodingRequest {
             do {
                 let decodedResponse = try JSONDecoder().decode(ReverseGeocodingResponse.self, from: data)
                 if let result = decodedResponse.results.first {
-                    let address = "\(result.region.area1.name) \(result.region.area2.name) \(result.region.area3.name) \(result.region.area4.name)"
+                    let address = "\(result.region.area1.name) \(result.region.area2.name) \(result.region.area3.name) \(result.region.area4.name) \(result.land.number1) \(result.land.number2)"
+                    if result.land.name != nil {
+                        print(result.land.name)
+                    }
                     return completion(address)
                 }
                 
@@ -141,6 +144,7 @@ struct NaverMapView: UIViewRepresentable {
         
         func mapViewCameraIdle(_ mapView: NMFMapView) {
             let position = mapView.cameraPosition.target
+            print("\(position.lat), \(position.lng)")
             let reverseGeocodingResponse = ReverseGeocodingRequest(position: position)
             reverseGeocodingResponse.sendRequest(completion: { address in
                 guard let addressResult = address else {
