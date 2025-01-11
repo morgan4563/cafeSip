@@ -7,7 +7,7 @@
 
 struct ReverseGeocodingResponse {
     let status: Status
-    let result: [Result]
+    let results: [Result]
 }
 
 struct Status {
