@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
-import NMapsMap
 
 struct AddressSelectionView: View {
-    @State var address = "서울시 용산구 땡땡로"
+    @State var viewModel = AddressSelectionViewModel()
+    
     var body: some View {
         VStack {
             Text("매장 등록")
@@ -25,7 +25,7 @@ struct AddressSelectionView: View {
             
             Divider()
             ZStack {
-                NaverMapView(address: $address)
+                NaverMapView(viewModel: $viewModel)
                     .frame(maxWidth: .infinity)
                 Image(systemName: "mappin")
                     .resizable()
@@ -39,7 +39,7 @@ struct AddressSelectionView: View {
                 .fill(.white)
                 .frame(maxWidth: .infinity, maxHeight: 50)
                 .overlay(alignment: .leading) {
-                    Text(address)
+                    Text(viewModel.address)
                         .font(.body)
                         .fontWeight(.semibold)
                         .padding()
@@ -56,130 +56,6 @@ struct AddressSelectionView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 20))
             }
         }
-    }
-}
-
-struct ReverseGeocodingRequest {
-    private let baseURL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc"
-    let position: NMGLatLng
-    
-    init(position: NMGLatLng) {
-        self.position = position
-    }
-    
-    func makeURL() -> URL? {
-        var urlComponents = URLComponents(string: baseURL)
-        urlComponents?.queryItems = [
-            URLQueryItem(name: "request", value: "coordsToaddr"),
-            URLQueryItem(name: "coords", value: "\(position.lng),\(position.lat)"),
-            URLQueryItem(name: "sourcecrs", value: "epsg:4326"),
-            URLQueryItem(name: "orders", value: "roadaddr,addr"),
-            URLQueryItem(name: "output", value: "json")
-        ]
-        guard let url = urlComponents?.url else {
-            print("Failed to create URL")
-            return nil
-        }
-        return url
-    }
-    
-    func makeRequest() -> URLRequest? {
-        guard let url = makeURL() else {
-            print("Failed to create Request")
-            return nil
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
-        request.addValue(NaverCloudPlatformKey.clientId, forHTTPHeaderField: "X-NCP-APIGW-API-KEY-ID")
-        request.addValue(NaverCloudPlatformKey.clientSecret, forHTTPHeaderField: "X-NCP-APIGW-API-KEY")
-        
-        return request
-    }
-    
-    func sendRequest(completion: @escaping (String?) -> Void) {
-        guard let request = makeRequest() else {
-            print("Failed to create request")
-            return completion(nil)
-        }
-        
-        let task = URLSession.shared.dataTask(with: request) {data, response, error in
-            if let error = error {
-                print("URLSessionError")
-                return
-            }
-            
-            guard let data = data else {
-                print("Data not received")
-                return
-            }
-            
-            do {
-                let decodedResponse = try JSONDecoder().decode(ReverseGeocodingResponse.self, from: data)
-                if let result = decodedResponse.results.first {
-                    var address = "\(result.region.area1.name) \(result.region.area2.name) \(result.region.area3.name)"
-                    
-                    if result.region.area4.name != "" {
-                        address += " \(result.region.area4.name)"
-                    }
-                    if let landName = result.land.name {
-                        address += " \(landName)"
-                    }
-                    
-                    if result.land.number1 != "" && result.land.number2 != "" {
-                        address += " \(result.land.number1)-\(result.land.number2)"
-                    }else if result.land.number1 != "" {
-                        address += " \(result.land.number1)"
-                    }
-                    
-                    return completion(address)
-                }
-                
-            } catch {
-                print("JSON decoding error")
-            }
-        }
-        task.resume()
-    }
-}
-
-struct NaverMapView: UIViewRepresentable {
-    @Binding var address: String
-    
-    class Coordinator: NSObject, NMFMapViewCameraDelegate {
-        var parent: NaverMapView
-        
-        init(parent: NaverMapView) {
-            self.parent = parent
-        }
-        
-        func mapViewCameraIdle(_ mapView: NMFMapView) {
-            let position = mapView.cameraPosition.target
-            print("\(position.lat), \(position.lng)")
-            let reverseGeocodingResponse = ReverseGeocodingRequest(position: position)
-            reverseGeocodingResponse.sendRequest(completion: { address in
-                guard let addressResult = address else {
-                    print("위치 데이터 출력 실패")
-                    return
-                }
-                self.parent.address = addressResult
-            })
-            
-        }
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(parent: self)
-    }
-    
-    func makeUIView(context: Context) -> some UIView {
-        let mapView = NMFNaverMapView(frame: .zero)
-        mapView.mapView.addCameraDelegate(delegate: context.coordinator)
-        return mapView
-    }
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
     }
 }
 
