@@ -5,31 +5,31 @@
 //  Created by hyunMac on 1/11/25.
 //
 
-struct ReverseGeocodingResponse {
+struct ReverseGeocodingResponse: Codable {
     let status: Status
     let results: [Result]
 }
 
-struct Status {
+struct Status: Codable {
     let code: Int
     let name: String
     let message: String
 }
 
-struct Result {
+struct Result: Codable {
     let name: String
     let code: Code
     let region: Region
     let land: Land
 }
 
-struct Code {
+struct Code: Codable {
     let id: String
     let type: String
     let mappingId: String
 }
 
-struct Region {
+struct Region: Codable {
     let area0: Area
     let area1: Area
     let area2: Area
@@ -37,22 +37,22 @@ struct Region {
     let area4: Area
 }
 
-struct Area {
+struct Area: Codable {
     let name: String
     let coords: Coords
 }
 
-struct Coords {
+struct Coords: Codable {
     let center: Center
 }
 
-struct Center {
+struct Center: Codable {
     let crs: String
     let x: Double
     let y: Double
 }
 
-struct Land {
+struct Land: Codable {
     let type: String
     let number1: String
     let number2: String
@@ -64,7 +64,7 @@ struct Land {
     let coords: Coords
 }
 
-struct Addition {
+struct Addition: Codable {
     let type: String
     let value: String
 }

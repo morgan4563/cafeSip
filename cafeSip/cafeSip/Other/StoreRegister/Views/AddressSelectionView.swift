@@ -97,10 +97,10 @@ struct ReverseGeocodingRequest {
         return request
     }
     
-    func sendRequest() {
+    func sendRequest(completion: @escaping (String?) -> Void) {
         guard let request = makeRequest() else {
             print("Failed to create request")
-            return
+            return completion(nil)
         }
         
         let task = URLSession.shared.dataTask(with: request) {data, response, error in
@@ -114,11 +114,18 @@ struct ReverseGeocodingRequest {
                 return
             }
             
-            
-            
+            do {
+                let decodedResponse = try JSONDecoder().decode(ReverseGeocodingResponse.self, from: data)
+                if let result = decodedResponse.results.first {
+                    let address = "\(result.region.area1.name) \(result.region.area2.name) \(result.region.area3.name) \(result.region.area4.name)"
+                    return completion(address)
+                }
+                
+            } catch {
+                print("JSON decoding error")
+            }
         }
     }
-    
 }
 
 struct NaverMapView: UIViewRepresentable {
@@ -133,11 +140,19 @@ struct NaverMapView: UIViewRepresentable {
         
         func mapViewCameraIdle(_ mapView: NMFMapView) {
             let position = mapView.cameraPosition.target
-            let lat = position.lat
-            let lng = position.lng
-
-            parent.address = "위도: \(lat), 경도: \(lng)"
-            print("위도: \(lat), 경도: \(lng)")
+//            let lat = position.lat
+//            let lng = position.lng
+//
+//            parent.address = "위도: \(lat), 경도: \(lng)"
+//            print("위도: \(lat), 경도: \(lng)")
+            let reverseGeocodingResponse = ReverseGeocodingRequest(position: position)
+            reverseGeocodingResponse.sendRequest(completion: { address in
+                guard let addressResult = address else {
+                    print("위치 데이터 출력 실패")
+                    return
+                }
+                self.parent.address = addressResult
+            })
             
         }
     }
