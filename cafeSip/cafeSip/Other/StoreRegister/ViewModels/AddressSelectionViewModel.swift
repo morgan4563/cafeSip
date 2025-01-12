@@ -9,6 +9,7 @@ import NMapsMap
 
 @Observable
 class AddressSelectionViewModel {
+    var navigationPath = NavigationPath()
     var address = "주소 정보를 수집중입니다."
     var detailAddress = ""
     var storeName = ""

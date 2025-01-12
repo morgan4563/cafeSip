@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AddressDetailView: View {
     @Binding var viewModel: AddressSelectionViewModel
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         VStack {
             Text("상세 주소 입력")
@@ -52,6 +54,17 @@ struct AddressDetailView: View {
                     .frame(width: 363, height: 42)
                     .background(.brown)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
+            }
+        }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .tint(.black)
+                }
             }
         }
     }

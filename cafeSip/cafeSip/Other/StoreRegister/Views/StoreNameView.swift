@@ -9,6 +9,8 @@ import SwiftUI
 
 struct StoreNameView: View {
     @Binding var viewModel: AddressSelectionViewModel
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         VStack {
             Text("매장 이름")
@@ -32,7 +34,7 @@ struct StoreNameView: View {
             Spacer()
             
             NavigationLink {
-                // 매장 등록 완료 화면으로 이동
+                CompleteStoreRegistrationView(viewModel: $viewModel)
             } label: {
                 Text("매장 등록 완료")
                     .fontWeight(.semibold)
@@ -40,6 +42,17 @@ struct StoreNameView: View {
                     .frame(width: 363, height: 42)
                     .background(.brown)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
+            }
+        }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .tint(.black)
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddressSelectionView: View {
     @State var viewModel = AddressSelectionViewModel()
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack {
@@ -56,6 +57,18 @@ struct AddressSelectionView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 20))
             }
         }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .tint(.black)
+                }
+            }
+        }
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 

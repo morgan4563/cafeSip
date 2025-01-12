@@ -25,7 +25,6 @@ struct OtherView: View {
                     .padding(.horizontal, 16)
                     .padding(.bottom, 4)
                 
-                
                 NavigationLink {
                     AddressSelectionView()
                 } label: {
@@ -37,11 +36,8 @@ struct OtherView: View {
                     .foregroundStyle(.black)
                     .opacity(0.8)
                 }
-                
-                
                 Spacer()
             }
-            
             Spacer()
         }
     }
