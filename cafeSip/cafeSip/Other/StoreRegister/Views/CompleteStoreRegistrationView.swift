@@ -30,9 +30,15 @@ struct CompleteStoreRegistrationView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             Spacer()
-            Text("매장 등록완료 버튼")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
+                
+            Button("매장 등록 완료") {
+                Task {
+                    await AuthManager.shared.addStoreDataToUserData(storeAddress: viewModel.address, storeDetailAddress: viewModel.detailAddress, storeName: viewModel.storeName)
+                }
+                
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
         }
         .navigationBarBackButtonHidden()
         .toolbar {

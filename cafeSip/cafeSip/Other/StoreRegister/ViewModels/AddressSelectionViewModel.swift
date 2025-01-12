@@ -24,4 +24,20 @@ class AddressSelectionViewModel {
             self.address = addressResult
         })
     }
+    
+    func goToAddressSelectionView() {
+        navigationPath.append("AddressSelectionView")
+    }
+    func goToAddressDetailView() {
+        navigationPath.append("AddressDetailView")
+    }
+    func goToStoreNameView() {
+        navigationPath.append("StoreNameView")
+    }
+    func goToCompleteRegistrationView() {
+        navigationPath.append("CompleteRegistrationView")
+    }
+    func goToOtherView() {
+        navigationPath = NavigationPath()
+    }
 }

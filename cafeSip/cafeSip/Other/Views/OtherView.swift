@@ -40,6 +40,7 @@ struct OtherView: View {
             }
             Spacer()
         }
+        
     }
 }
 
