@@ -67,7 +67,7 @@ class AuthManager {
 
 // MARK: - Store
 extension AuthManager {
-    func addStoreDataToUserData(id: String, storeAddress: String, storeDetailAddress: String, storeName: String) async {
+    func addStoreDataToUserData(storeAddress: String, storeDetailAddress: String, storeName: String) async {
         guard let userId = currentAuthUser?.uid else { return }
         let userRef = Firestore.firestore().collection("users").document(userId)
         
