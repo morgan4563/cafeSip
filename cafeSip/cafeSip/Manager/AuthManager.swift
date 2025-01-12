@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 @Observable
+//MARK: - User
 class AuthManager {
     static let shared = AuthManager()
     var currentAuthUser: FirebaseAuth.User?
@@ -61,5 +62,27 @@ class AuthManager {
         } catch {
             print("Failed to load CurrentUserData")
         }
+    }
+}
+
+// MARK: - Store
+extension AuthManager {
+    func addStoreDataToUserData(id: String, storeAddress: String, storeDetailAddress: String, storeName: String) async {
+        guard let userId = currentAuthUser?.uid else { return }
+        let userRef = Firestore.firestore().collection("users").document(userId)
+        
+        let storeId = UUID().uuidString
+        let store = Store(id: storeId, name: storeName, address: storeAddress, detailAddress: storeDetailAddress)
+        
+        do {
+            let encodedStore = try Firestore.Encoder().encode(store)
+            try await userRef.updateData([
+                "store": encodedStore
+            ])
+            print("storeData add success")
+        } catch {
+            print("Failed to add StoreData")
+        }
+        
     }
 }
