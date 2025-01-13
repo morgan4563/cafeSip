@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddressSelectionView: View {
-    @State var viewModel = AddressSelectionViewModel()
+    @Binding var viewModel: AddressSelectionViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -46,8 +46,8 @@ struct AddressSelectionView: View {
                         .padding()
                 }
             
-            NavigationLink {
-                AddressDetailView(viewModel: $viewModel)
+            Button {
+                viewModel.goToAddressDetailView()
             } label: {
                 Text("해당 주소로 설정")
                     .fontWeight(.semibold)
@@ -73,5 +73,5 @@ struct AddressSelectionView: View {
 }
 
 #Preview {
-    AddressSelectionView()
+    AddressSelectionView(viewModel: .constant(AddressSelectionViewModel()))
 }

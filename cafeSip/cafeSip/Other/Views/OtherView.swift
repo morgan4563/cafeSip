@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct OtherView: View {
+    @State var viewModel = AddressSelectionViewModel()
+    
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $viewModel.navigationPath) {
             VStack(alignment: .leading) {
                 Text("Other")
                     .font(.title)
@@ -25,22 +27,30 @@ struct OtherView: View {
                     .padding(.horizontal, 16)
                     .padding(.bottom, 4)
                 
-                NavigationLink {
-                    AddressSelectionView()
-                } label: {
-                    HStack {
-                        Image(systemName: "house.circle.fill")
-                        Text("매장 등록하기")
-                    }
-                    .padding(.horizontal, 16)
-                    .foregroundStyle(.black)
-                    .opacity(0.8)
+                Button("\(Image(systemName: "house.circle.fill"))매장등록") {
+                    viewModel.goToAddressSelectionView()
                 }
+                .padding(.horizontal, 16)
+                .foregroundStyle(.black)
+                .opacity(0.8)
+                
                 Spacer()
             }
-            Spacer()
+            .navigationDestination(for: String.self) { value in
+                switch value {
+                case "AddressSelectionView":
+                    AddressSelectionView(viewModel: $viewModel)
+                case "AddressDetailView":
+                    AddressDetailView(viewModel: $viewModel)
+                case "StoreNameView":
+                    StoreNameView(viewModel: $viewModel)
+                case "CompleteStoreRegistrationView":
+                    CompleteStoreRegistrationView(viewModel: $viewModel)
+                default:
+                    Text("잘못된접근")
+                }
+            }
         }
-        
     }
 }
 

@@ -35,7 +35,7 @@ struct CompleteStoreRegistrationView: View {
                 Task {
                     await AuthManager.shared.addStoreDataToUserData(storeAddress: viewModel.address, storeDetailAddress: viewModel.detailAddress, storeName: viewModel.storeName)
                 }
-                
+                viewModel.goToOtherView()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()

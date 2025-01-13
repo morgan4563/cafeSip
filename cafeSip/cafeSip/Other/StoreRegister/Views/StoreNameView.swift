@@ -33,8 +33,8 @@ struct StoreNameView: View {
             
             Spacer()
             
-            NavigationLink {
-                CompleteStoreRegistrationView(viewModel: $viewModel)
+            Button {
+                viewModel.goToCompleteStoreRegistrationView()
             } label: {
                 Text("매장 등록 완료")
                     .fontWeight(.semibold)

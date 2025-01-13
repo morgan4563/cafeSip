@@ -34,8 +34,8 @@ class AddressSelectionViewModel {
     func goToStoreNameView() {
         navigationPath.append("StoreNameView")
     }
-    func goToCompleteRegistrationView() {
-        navigationPath.append("CompleteRegistrationView")
+    func goToCompleteStoreRegistrationView() {
+        navigationPath.append("CompleteStoreRegistrationView")
     }
     func goToOtherView() {
         navigationPath = NavigationPath()
