@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct StoreManagementView: View {
-    @Binding var viewModel: OtherViewModel()
+    @Binding var viewModel: OtherViewModel
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    StoreManagementView()
+    StoreManagementView(viewModel: .constant(OtherViewModel()))
 }
