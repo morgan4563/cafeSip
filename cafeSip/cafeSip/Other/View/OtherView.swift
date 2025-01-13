@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OtherView: View {
     @State var storeRegisterViewModel = StoreRegisterViewModel()
+    @State var storeManagementViewModel = StoreManagementViewModel()
     @State var otherNavigationViewModel = OtherNavigationViewModel()
     
     var body: some View {
@@ -37,12 +38,11 @@ struct OtherView: View {
                 
                 Button("\(Image(systemName: "house.circle.fill"))매장관리") {
                     // 매장등록 체크(임시)
-                    guard storeRegisterViewModel.storeName != "" else {
+                    guard storeRegisterViewModel.isStoreRegistered else {
                         print("매장등록이 먼저 진행되어야한다")
                         return
                     }
-                    
-                    otherNavigationViewModel.goToAddressSelectionView()
+                    otherNavigationViewModel.goToStoreManagementView()
                 }
                 .padding(16)
                 .foregroundStyle(.black)
@@ -63,8 +63,8 @@ struct OtherView: View {
                     CompleteStoreRegistrationView(viewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
                 
                     // storeManage
-//                case "StoreManagementView":
-//                    StoreManagementView(viewModel: $viewModel)
+                case "StoreManagementView":
+                    StoreManagementView(viewModel: $storeManagementViewModel, navigationViewModel: $otherNavigationViewModel)
                 default:
                     Text("잘못된접근")
                 }
