@@ -34,6 +34,19 @@ struct OtherView: View {
                 .foregroundStyle(.black)
                 .opacity(0.8)
                 
+                Button("\(Image(systemName: "house.circle.fill"))매장관리") {
+                    // 매장등록 체크(임시)
+                    guard viewModel.storeName != "" else {
+                        print("매장등록이 먼저 진행되어야한다")
+                        return
+                    }
+                    
+                    viewModel.goToAddressSelectionView()
+                }
+                .padding(16)
+                .foregroundStyle(.black)
+                .opacity(0.8)
+                
                 Spacer()
             }
             .navigationDestination(for: String.self) { value in
