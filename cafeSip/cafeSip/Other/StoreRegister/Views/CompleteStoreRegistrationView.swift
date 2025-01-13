@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CompleteStoreRegistrationView: View {
-    @Binding var viewModel: AddressSelectionViewModel
+    @Binding var viewModel: OtherViewModel
     @Environment(\.dismiss) var dismiss
     var body: some View {
         VStack {
@@ -55,5 +55,5 @@ struct CompleteStoreRegistrationView: View {
 }
 
 #Preview {
-    CompleteStoreRegistrationView(viewModel: .constant(AddressSelectionViewModel()))
+    CompleteStoreRegistrationView(viewModel: .constant(OtherViewModel()))
 }

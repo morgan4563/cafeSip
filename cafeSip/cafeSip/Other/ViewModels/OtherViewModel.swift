@@ -8,7 +8,7 @@ import SwiftUI
 import NMapsMap
 
 @Observable
-class AddressSelectionViewModel {
+class OtherViewModel {
     var navigationPath = NavigationPath()
     var address = "주소 정보를 수집중입니다."
     var detailAddress = ""
@@ -25,6 +25,7 @@ class AddressSelectionViewModel {
         })
     }
     
+    // storeRegistration
     func goToAddressSelectionView() {
         navigationPath.append("AddressSelectionView")
     }
@@ -37,6 +38,14 @@ class AddressSelectionViewModel {
     func goToCompleteStoreRegistrationView() {
         navigationPath.append("CompleteStoreRegistrationView")
     }
+    
+    // storeManagement
+    func goToStoreManagementView() {
+        navigationPath.append("StoreManagementView")
+    }
+    
+    
+    // mainView Back
     func goToOtherView() {
         navigationPath = NavigationPath()
     }

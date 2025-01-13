@@ -8,7 +8,7 @@ import SwiftUI
 import NMapsMap
 
 struct NaverMapView: UIViewRepresentable {
-    @Binding var viewModel: AddressSelectionViewModel
+    @Binding var viewModel: OtherViewModel
     
     class Coordinator: NSObject, NMFMapViewCameraDelegate {
         var parent: NaverMapView

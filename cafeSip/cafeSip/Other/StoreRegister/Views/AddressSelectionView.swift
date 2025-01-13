@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddressSelectionView: View {
-    @Binding var viewModel: AddressSelectionViewModel
+    @Binding var viewModel: OtherViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -73,5 +73,5 @@ struct AddressSelectionView: View {
 }
 
 #Preview {
-    AddressSelectionView(viewModel: .constant(AddressSelectionViewModel()))
+    AddressSelectionView(viewModel: .constant(OtherViewModel()))
 }

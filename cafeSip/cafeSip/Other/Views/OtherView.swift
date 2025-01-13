@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OtherView: View {
-    @State var viewModel = AddressSelectionViewModel()
+    @State var viewModel = OtherViewModel()
     
     var body: some View {
         NavigationStack(path: $viewModel.navigationPath) {
@@ -38,6 +38,7 @@ struct OtherView: View {
             }
             .navigationDestination(for: String.self) { value in
                 switch value {
+                    // storeRegistration
                 case "AddressSelectionView":
                     AddressSelectionView(viewModel: $viewModel)
                 case "AddressDetailView":
@@ -46,6 +47,10 @@ struct OtherView: View {
                     StoreNameView(viewModel: $viewModel)
                 case "CompleteStoreRegistrationView":
                     CompleteStoreRegistrationView(viewModel: $viewModel)
+                
+                    // storeManage
+                case "StoreManagementView":
+                    StoreManagementView(viewModel: $viewModel)
                 default:
                     Text("잘못된접근")
                 }
