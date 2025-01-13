@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StoreManagementView: View {
-    @Binding var viewModel: OtherViewModel
+    @Binding var viewModel: StoreRegisterViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -43,5 +43,5 @@ struct StoreManagementView: View {
 }
 
 #Preview {
-    StoreManagementView(viewModel: .constant(OtherViewModel()))
+    StoreManagementView(viewModel: .constant(StoreRegisterViewModel()))
 }

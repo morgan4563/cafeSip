@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct AddressDetailView: View {
-    @Binding var viewModel: OtherViewModel
+    @Binding var viewModel: StoreRegisterViewModel
+    @Binding var navigationViewModel: OtherNavigationViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -46,7 +47,7 @@ struct AddressDetailView: View {
    
             
             Button {
-                viewModel.goToStoreNameView()
+                navigationViewModel.goToStoreNameView()
             } label: {
                 Text("해당 주소로 설정")
                     .fontWeight(.semibold)
@@ -71,5 +72,5 @@ struct AddressDetailView: View {
 }
 
 #Preview {
-    AddressDetailView(viewModel: .constant(OtherViewModel()))
+    AddressDetailView(viewModel: .constant(StoreRegisterViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
 }

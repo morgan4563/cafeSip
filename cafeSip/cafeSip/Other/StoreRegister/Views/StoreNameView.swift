@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct StoreNameView: View {
-    @Binding var viewModel: OtherViewModel
+    @Binding var viewModel: StoreRegisterViewModel
+    @Binding var navigationViewModel: OtherNavigationViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -34,7 +35,7 @@ struct StoreNameView: View {
             Spacer()
             
             Button {
-                viewModel.goToCompleteStoreRegistrationView()
+                navigationViewModel.goToCompleteStoreRegistrationView()
             } label: {
                 Text("매장 등록 완료")
                     .fontWeight(.semibold)
@@ -59,5 +60,5 @@ struct StoreNameView: View {
 }
 
 #Preview {
-    StoreNameView(viewModel: .constant(OtherViewModel()))
+    StoreNameView(viewModel: .constant(StoreRegisterViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
 }

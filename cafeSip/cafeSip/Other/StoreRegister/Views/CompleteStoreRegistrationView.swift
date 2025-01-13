@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CompleteStoreRegistrationView: View {
-    @Binding var viewModel: OtherViewModel
+    @Binding var viewModel: StoreRegisterViewModel
+    @Binding var navigationViewModel: OtherNavigationViewModel
     @Environment(\.dismiss) var dismiss
     var body: some View {
         VStack {
@@ -35,7 +36,7 @@ struct CompleteStoreRegistrationView: View {
                 Task {
                     await AuthManager.shared.addStoreDataToUserData(storeAddress: viewModel.address, storeDetailAddress: viewModel.detailAddress, storeName: viewModel.storeName)
                 }
-                viewModel.goToOtherView()
+                navigationViewModel.goToOtherView()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
@@ -55,5 +56,5 @@ struct CompleteStoreRegistrationView: View {
 }
 
 #Preview {
-    CompleteStoreRegistrationView(viewModel: .constant(OtherViewModel()))
+    CompleteStoreRegistrationView(viewModel: .constant(StoreRegisterViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
 }

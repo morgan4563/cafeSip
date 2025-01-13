@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct OtherView: View {
-    @State var viewModel = OtherViewModel()
+    @State var storeRegisterViewModel = StoreRegisterViewModel()
+    @State var otherNavigationViewModel = OtherNavigationViewModel()
     
     var body: some View {
-        NavigationStack(path: $viewModel.navigationPath) {
+        NavigationStack(path: $otherNavigationViewModel.navigationPath) {
             VStack(alignment: .leading) {
                 Text("Other")
                     .font(.title)
@@ -28,7 +29,7 @@ struct OtherView: View {
                     .padding(.bottom, 4)
                 
                 Button("\(Image(systemName: "house.circle.fill"))매장등록") {
-                    viewModel.goToAddressSelectionView()
+                    otherNavigationViewModel.goToAddressSelectionView()
                 }
                 .padding(.horizontal, 16)
                 .foregroundStyle(.black)
@@ -36,12 +37,12 @@ struct OtherView: View {
                 
                 Button("\(Image(systemName: "house.circle.fill"))매장관리") {
                     // 매장등록 체크(임시)
-                    guard viewModel.storeName != "" else {
+                    guard storeRegisterViewModel.storeName != "" else {
                         print("매장등록이 먼저 진행되어야한다")
                         return
                     }
                     
-                    viewModel.goToAddressSelectionView()
+                    otherNavigationViewModel.goToAddressSelectionView()
                 }
                 .padding(16)
                 .foregroundStyle(.black)
@@ -53,17 +54,17 @@ struct OtherView: View {
                 switch value {
                     // storeRegistration
                 case "AddressSelectionView":
-                    AddressSelectionView(viewModel: $viewModel)
+                    AddressSelectionView(viewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
                 case "AddressDetailView":
-                    AddressDetailView(viewModel: $viewModel)
+                    AddressDetailView(viewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
                 case "StoreNameView":
-                    StoreNameView(viewModel: $viewModel)
+                    StoreNameView(viewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
                 case "CompleteStoreRegistrationView":
-                    CompleteStoreRegistrationView(viewModel: $viewModel)
+                    CompleteStoreRegistrationView(viewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
                 
                     // storeManage
-                case "StoreManagementView":
-                    StoreManagementView(viewModel: $viewModel)
+//                case "StoreManagementView":
+//                    StoreManagementView(viewModel: $viewModel)
                 default:
                     Text("잘못된접근")
                 }
