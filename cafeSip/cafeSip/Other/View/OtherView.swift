@@ -30,6 +30,10 @@ struct OtherView: View {
                     .padding(.bottom, 4)
                 
                 Button("\(Image(systemName: "house.circle.fill"))매장등록") {
+                    guard AuthManager.shared.currentStore == nil else {
+                        print("이미 등록된 매장이 있음")
+                        return
+                    }
                     otherNavigationViewModel.goToAddressSelectionView()
                 }
                 .padding(.horizontal, 16)
@@ -37,11 +41,10 @@ struct OtherView: View {
                 .opacity(0.8)
                 
                 Button("\(Image(systemName: "house.circle.fill"))매장관리") {
-                    // 매장등록 체크(임시)
-//                    guard storeRegisterViewModel.isStoreRegistered else {
-//                        print("매장등록이 먼저 진행되어야한다")
-//                        return
-//                    }
+                    guard let currentStore = AuthManager.shared.currentStore else {
+                        print("매장등록이 먼저 진행되어야한다")
+                        return
+                    }
                     Task {
                        await AuthManager.shared.loadCurrentStoreData()
                     }

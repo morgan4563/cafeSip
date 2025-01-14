@@ -36,7 +36,6 @@ struct CompleteStoreRegistrationView: View {
                 Task {
                     await AuthManager.shared.uploadStoreData(storeAddress: viewModel.address, storeDetailAddress: viewModel.detailAddress, storeName: viewModel.storeName)
                 }
-                viewModel.isStoreRegistered = true
                 navigationViewModel.goToOtherView()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
