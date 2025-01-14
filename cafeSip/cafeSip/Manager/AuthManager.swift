@@ -15,6 +15,7 @@ class AuthManager {
     static let shared = AuthManager()
     var currentAuthUser: FirebaseAuth.User?
     var currentUser: User?
+    var currentStore: Store?
     
     func createUser(email: String, password: String, userName: String) async {
         print(email,password,userName)
@@ -50,6 +51,7 @@ class AuthManager {
             currentAuthUser = result.user
             
             await loadCurrentUserData()
+            await loadCurrentStoreData()
         } catch {
             print("Failed to signIn")
         }
@@ -63,6 +65,19 @@ class AuthManager {
             print("Failed to load CurrentUserData")
         }
     }
+    
+    func loadCurrentStoreData() async {
+        guard let storeId = currentUser?.storeId else {
+            print("아직 스토어 아이디가 존재하지 않음")
+            return
+        }
+        do {
+            self.currentStore = try await Firestore.firestore().collection("stores").document(storeId).getDocument(as: Store.self)
+            print("currentStore 등록완료")
+        } catch {
+            print("스토어 데이터 로드 실패")
+        }
+    }
 }
 
 // MARK: - Store
@@ -71,16 +86,22 @@ extension AuthManager {
         guard let userId = currentAuthUser?.uid else { return }
         
         let storeId = UUID().uuidString
-        let store = Store(id: storeId, userId: userId, name: storeName, address: storeAddress, detailAddress: storeDetailAddress)
+        let storeData = Store(id: storeId, name: storeName, address: storeAddress, detailAddress: storeDetailAddress, menuItems: nil)
         
         do {
-            let encodedStore = try Firestore.Encoder().encode(store)
+            let encodedStore = try Firestore.Encoder().encode(storeData)
+            // user아이디에 스토어 아이디 추가
+            try await Firestore.firestore().collection("users").document(userId).updateData(["storeId" : storeId])
             try await Firestore.firestore().collection("stores").document(storeId).setData(encodedStore)
+            
+            // 데이터 업로드후 다시 로드해서 사용
+            currentUser?.storeId = storeId
+            currentStore = storeData
             
             print("storeData add success")
         } catch {
             print("Failed to add StoreData")
         }
-        
     }
 }
+

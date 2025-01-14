@@ -27,7 +27,7 @@ struct MenuRegistrationView: View {
             Spacer()
             Button {
                 viewModel.addMenuItem()
-                navigationViewModel.goToStoreManagementView()
+                dismiss()
             } label: {
                 Text("메뉴등록")
             }

@@ -38,10 +38,14 @@ struct OtherView: View {
                 
                 Button("\(Image(systemName: "house.circle.fill"))매장관리") {
                     // 매장등록 체크(임시)
-                    guard storeRegisterViewModel.isStoreRegistered else {
-                        print("매장등록이 먼저 진행되어야한다")
-                        return
+//                    guard storeRegisterViewModel.isStoreRegistered else {
+//                        print("매장등록이 먼저 진행되어야한다")
+//                        return
+//                    }
+                    Task {
+                       await AuthManager.shared.loadCurrentStoreData()
                     }
+                    storeManagementViewModel.getStoreData()
                     otherNavigationViewModel.goToStoreManagementView()
                 }
                 .padding(16)

@@ -27,6 +27,7 @@ class OtherNavigationViewModel {
     
     // storeManagement
     func goToStoreManagementView() {
+        
         navigationPath.append("StoreManagementView")
     }
     func goToMenuRegistrationView() {

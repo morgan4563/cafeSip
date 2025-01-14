@@ -7,7 +7,6 @@
 
 struct Store: Codable {
     let id: String
-    let userId: String
     var name: String
     let address: String
     let detailAddress: String

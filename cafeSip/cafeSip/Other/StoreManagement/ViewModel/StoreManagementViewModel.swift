@@ -18,37 +18,14 @@ class StoreManagementViewModel {
     var newMenuDescription = ""
     var newMenuPrice = ""
     
-    init() {
-        updateStoreData()
-    }
-    
-    func updateStoreData() {
-        guard let userId = AuthManager.shared.currentAuthUser?.uid else {
-            print("유저정보 수집 실패")
+    func getStoreData() {
+        guard let storeData = AuthManager.shared.currentStore else {
+            print("storeData불러오기 실패")
             return
         }
-        let storeRef = Firestore.firestore().collection("stores").document(userId)
-        
-        storeRef.getDocument { document, error in
-            if let error = error {
-                print("firebase데이터 수신중 에러 발생, \(error.localizedDescription)")
-                return
-            }
-            guard let document = document else {
-                print("document가 존재하지않음")
-                return
-            }
-            
-            do {
-                let storeData = try document.data(as: Store.self)
-                self.storeId = storeData.id
-                self.storeName = storeData.name
-                self.menuItems = storeData.menuItems ?? []
-                
-            } catch {
-                print("Firestore 데이터 디코딩 실패")
-            }
-        }
+        self.storeId = storeData.id
+        self.storeName = storeData.name
+        self.menuItems = storeData.menuItems ?? []
     }
     
     func addMenuItem() {
@@ -61,6 +38,20 @@ class StoreManagementViewModel {
         clearFields()
         
         let storeRef = Firestore.firestore().collection("stores").document(storeId)
+        do {
+            let menuData = try Firestore.Encoder().encode(newMenu)
+            storeRef.updateData([
+                "menuItems": FieldValue.arrayUnion([menuData])
+            ]) { error in
+                if let error = error {
+                    print("Firebase 메뉴 추가 실패\(error)")
+                } else {
+                    print("Firebase 메뉴 추가 성공")
+                }
+            }
+        } catch {
+            print("Firestore 데이터 인코딩 실패")
+        }
     }
     func clearFields() {
         newMenuName = ""
