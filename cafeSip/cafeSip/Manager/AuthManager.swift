@@ -69,16 +69,14 @@ class AuthManager {
 extension AuthManager {
     func addStoreDataToUserData(storeAddress: String, storeDetailAddress: String, storeName: String) async {
         guard let userId = currentAuthUser?.uid else { return }
-        let userRef = Firestore.firestore().collection("users").document(userId)
         
         let storeId = UUID().uuidString
-        let store = Store(id: storeId, name: storeName, address: storeAddress, detailAddress: storeDetailAddress)
+        let store = Store(id: storeId, userId: userId, name: storeName, address: storeAddress, detailAddress: storeDetailAddress)
         
         do {
             let encodedStore = try Firestore.Encoder().encode(store)
-            try await userRef.updateData([
-                "store": encodedStore
-            ])
+            try await Firestore.firestore().collection("stores").document(storeId).setData(encodedStore)
+            
             print("storeData add success")
         } catch {
             print("Failed to add StoreData")
