@@ -34,7 +34,7 @@ struct CompleteStoreRegistrationView: View {
                 
             Button("매장 등록 완료") {
                 Task {
-                    await AuthManager.shared.addStoreDataToUserData(storeAddress: viewModel.address, storeDetailAddress: viewModel.detailAddress, storeName: viewModel.storeName)
+                    await AuthManager.shared.uploadStoreData(storeAddress: viewModel.address, storeDetailAddress: viewModel.detailAddress, storeName: viewModel.storeName)
                 }
                 viewModel.isStoreRegistered = true
                 navigationViewModel.goToOtherView()

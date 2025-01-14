@@ -6,8 +6,8 @@
 //
 import SwiftUI
 
-struct MenuItem: Identifiable {
-    let id = UUID()
+struct MenuItem: Codable, Identifiable {
+    var id = UUID()
     var name: String
     var description: String
     var price: String

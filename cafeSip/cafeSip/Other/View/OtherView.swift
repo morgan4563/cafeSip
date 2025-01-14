@@ -42,10 +42,6 @@ struct OtherView: View {
                         print("매장등록이 먼저 진행되어야한다")
                         return
                     }
-                    // 주입하는 방식에서 변경필요
-                    let storeName = storeRegisterViewModel.storeName
-                    storeManagementViewModel.updateStoreData(name: storeName)
-                    
                     otherNavigationViewModel.goToStoreManagementView()
                 }
                 .padding(16)
