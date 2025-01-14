@@ -74,6 +74,7 @@ struct StoreManagementView: View {
                 }
             }
         }
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 
