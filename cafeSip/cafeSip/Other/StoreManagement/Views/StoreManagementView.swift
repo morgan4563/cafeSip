@@ -14,17 +14,32 @@ struct StoreManagementView: View {
     
     var body: some View {
         VStack {
-//            Text(viewModel.storeName)
-            Text("힝힝카페")
+            Text(viewModel.storeName)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
-            Text("메뉴등록")
-                .frame(maxWidth: .infinity, alignment: .trailing)
-                .padding()
-            Text("메뉴1")
-            Text("메뉴2")
-            Text("메뉴3")
-            Text("메뉴4")
+            
+            Button {
+                navigationViewModel.goToMenuRegistrationView()
+            } label: {
+                Text("메뉴등록")
+            }
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            .padding()
+            
+            ScrollView {
+                LazyVStack(alignment: .leading) {
+                    ForEach(viewModel.menuItems) { menu in
+                        HStack {
+                            Text(menu.name)
+                                .font(.headline)
+                            Spacer()
+                            Text(menu.description)
+                            Spacer()
+                            Text("\(menu.price)원")
+                        }
+                    }
+                }
+            }
             Spacer()
             
             Text("주문 알림 확인")
