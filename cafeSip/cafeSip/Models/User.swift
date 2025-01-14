@@ -11,5 +11,4 @@ struct User: Codable {
     let id: String
     let email: String
     var userName: String
-    var store: Store?
 }
