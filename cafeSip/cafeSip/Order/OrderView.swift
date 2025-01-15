@@ -11,40 +11,58 @@ import CodeScanner
 struct OrderView: View {
     @State private var isScanning = false
     @State private var scannedCode: String?
+    @State var orderViewModel = OrderViewModel()
+    @State var navigationViewModel = OrderNavigationViewModel()
     
     var body: some View {
-        VStack {
-            Text("방문중인 매장을 선택합니다")
-                .font(.headline)
-                .padding()
-            
-            if let code = scannedCode {
-                Text(code)
+        NavigationStack(path: $navigationViewModel.navigationPath) {
+            VStack {
+                Text("방문중인 매장을 선택합니다")
+                    .font(.headline)
                     .padding()
+                
+                Button("카메라로 QR스캔") {
+                    isScanning = true
+                }
+                .foregroundStyle(.white)
+                .padding()
+                .background(Color.brown)
+                .cornerRadius(10)
             }
             
-            Button("카메라로 QR스캔") {
-                isScanning = true
-            }
-            .foregroundStyle(.white)
-            .padding()
-            .background(Color.blue)
-            .cornerRadius(10)
-        }
-        .sheet(isPresented: $isScanning) {
-            CodeScannerView(
-                codeTypes: [.qr],
-                completion: { result in
-                    switch result {
-                    case .success(let scanResult):
-                        scannedCode = scanResult.string
-                        isScanning = false
-                    case .failure(let error):
-                        print("스캔실패: \(error.localizedDescription)")
-                        isScanning = false
+            .onChange(of: scannedCode, { oldValue, newValue in
+                if let code = newValue, code != oldValue {
+                    orderViewModel.inputQRData(code: code)
+                    Task {
+                        await orderViewModel.loadStore()
                     }
+                    navigationViewModel.goToSelectMenuView()
                 }
-            )
+            })
+            .sheet(isPresented: $isScanning) {
+                CodeScannerView(
+                    codeTypes: [.qr],
+                    completion: { result in
+                        switch result {
+                        case .success(let scanResult):
+                            scannedCode = scanResult.string
+                            isScanning = false
+                        case .failure(let error):
+                            print("스캔실패: \(error.localizedDescription)")
+                            isScanning = false
+                        }
+                    }
+                )
+            }
+            .navigationDestination(for: String.self) { value in
+                switch value {
+                    // storeRegistration
+                case "SelectMenuView":
+                    SelectMenuView(viewModel: $orderViewModel, navigationViewModel: $navigationViewModel)
+                default:
+                    Text("잘못된접근")
+                }
+            }
         }
     }
 }

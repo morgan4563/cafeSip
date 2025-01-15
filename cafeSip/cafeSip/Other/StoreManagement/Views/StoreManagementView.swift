@@ -32,7 +32,6 @@ struct StoreManagementView: View {
                 }
             }
             
-            
             Text(viewModel.storeName)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
