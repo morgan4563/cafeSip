@@ -41,7 +41,7 @@ struct OtherView: View {
                 .opacity(0.8)
                 
                 Button("\(Image(systemName: "house.circle.fill"))매장관리") {
-                    guard let currentStore = AuthManager.shared.currentStore else {
+                    guard AuthManager.shared.currentStore != nil else {
                         print("매장등록이 먼저 진행되어야한다")
                         return
                     }

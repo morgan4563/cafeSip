@@ -22,7 +22,7 @@ struct MainTabView: View {
                     Image(systemName: "creditcard.fill")
                 }
                 .tag(1)
-            Text("order")
+            OrderView()
                 .tabItem {
                     Image(systemName: "mug.fill")
                 }

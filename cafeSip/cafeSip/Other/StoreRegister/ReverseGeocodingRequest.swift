@@ -52,7 +52,7 @@ struct ReverseGeocodingRequest {
         }
         
         let task = URLSession.shared.dataTask(with: request) {data, response, error in
-            if let error = error {
+            if error != nil {
                 print("URLSessionError")
                 return
             }
