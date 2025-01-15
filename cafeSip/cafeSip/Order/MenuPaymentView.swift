@@ -30,7 +30,12 @@ struct MenuPaymentView: View {
                     .padding()
                 
                 Button {
-                    payViewModel.balance -= Int(menu.price)!
+                    if payViewModel.balance >= Int(menu.price)! {
+                        payViewModel.balance -= Int(menu.price)!
+                        print("주문완료")
+                    } else {
+                        print("잔액부족")
+                    }
                 } label: {
                     Text("결제하기")
                 }

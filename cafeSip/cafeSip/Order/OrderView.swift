@@ -61,7 +61,7 @@ struct OrderView: View {
                 case "SelectMenuView":
                     SelectMenuView(viewModel: $orderViewModel, navigationViewModel: $navigationViewModel, payViewModel: $payViewModel)
                 case "MenuPaymentView":
-                    MenuPaymentView(orderViewModel: $orderViewModel, payVieModel: $payViewModel, navigationViewModel: $navigationViewModel)
+                    MenuPaymentView(orderViewModel: $orderViewModel, payViewModel: $payViewModel, navigationViewModel: $navigationViewModel)
                 default:
                     Text("잘못된접근")
                 }
