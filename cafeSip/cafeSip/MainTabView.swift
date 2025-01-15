@@ -17,7 +17,7 @@ struct MainTabView: View {
                     Image(systemName: "house.fill")
                 }
                 .tag(0)
-            Text("pay")
+            PayView()
                 .tabItem {
                     Image(systemName: "creditcard.fill")
                 }
