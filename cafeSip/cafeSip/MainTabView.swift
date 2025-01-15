@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainTabView: View {
     @State var tabIndex = 0
+    @State var payViewModel = PayViewModel()
     
     var body: some View {
         TabView(selection: $tabIndex) {
@@ -17,12 +18,12 @@ struct MainTabView: View {
                     Image(systemName: "house.fill")
                 }
                 .tag(0)
-            PayView()
+            PayView(viewModel: $payViewModel)
                 .tabItem {
                     Image(systemName: "creditcard.fill")
                 }
                 .tag(1)
-            OrderView()
+            OrderView(payViewModel: $payViewModel)
                 .tabItem {
                     Image(systemName: "mug.fill")
                 }

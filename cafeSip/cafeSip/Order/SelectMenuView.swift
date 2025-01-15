@@ -10,6 +10,7 @@ import SwiftUI
 struct SelectMenuView: View {
     @Binding var viewModel: OrderViewModel
     @Binding var navigationViewModel: OrderNavigationViewModel
+    @Binding var payViewModel: PayViewModel
     @Environment(\.dismiss) var dismiss
     var body: some View {
         VStack(alignment: .leading) {
@@ -30,15 +31,28 @@ struct SelectMenuView: View {
             ScrollView {
                 LazyVStack(alignment: .leading) {
                     ForEach(viewModel.menuItems) { menu in
-                        HStack {
-                            Text(menu.name)
-                                .font(.headline)
+                        VStack {
+                            HStack {
+                                Text(menu.name)
+                                    .font(.headline)
+                                Spacer()
+                                Text(menu.description)
+                                Spacer()
+                                Text("\(menu.price)원")
+                                    .font(.subheadline)
+                            }
                             Spacer()
-                            Text(menu.description)
-                            Spacer()
-                            Text("\(menu.price)원")
+                            Button {
+                                viewModel.selectedMenu = menu
+                                navigationViewModel.goToMenuPaymentView()
+                            } label: {
+                                Text("선택")
+                                    .padding()
+                                    .background(.brown)
+                                    .foregroundStyle(.white)
+                                    .cornerRadius(8)
+                            }
                         }
-                        .padding()
                     }
                 }
             }
@@ -58,5 +72,5 @@ struct SelectMenuView: View {
 }
 
 #Preview {
-    SelectMenuView(viewModel: .constant(OrderViewModel()), navigationViewModel: .constant(OrderNavigationViewModel()))
+    SelectMenuView(viewModel: .constant(OrderViewModel()), navigationViewModel: .constant(OrderNavigationViewModel()), payViewModel: .constant(PayViewModel()))
 }

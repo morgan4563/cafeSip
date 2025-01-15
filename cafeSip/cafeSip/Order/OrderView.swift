@@ -13,6 +13,7 @@ struct OrderView: View {
     @State private var scannedCode: String?
     @State var orderViewModel = OrderViewModel()
     @State var navigationViewModel = OrderNavigationViewModel()
+    @Binding var payViewModel: PayViewModel
     
     var body: some View {
         NavigationStack(path: $navigationViewModel.navigationPath) {
@@ -58,7 +59,9 @@ struct OrderView: View {
                 switch value {
                     // storeRegistration
                 case "SelectMenuView":
-                    SelectMenuView(viewModel: $orderViewModel, navigationViewModel: $navigationViewModel)
+                    SelectMenuView(viewModel: $orderViewModel, navigationViewModel: $navigationViewModel, payViewModel: $payViewModel)
+                case "MenuPaymentView":
+                    MenuPaymentView(orderViewModel: $orderViewModel, payVieModel: $payViewModel, navigationViewModel: $navigationViewModel)
                 default:
                     Text("잘못된접근")
                 }
@@ -68,5 +71,5 @@ struct OrderView: View {
 }
 
 #Preview {
-    OrderView()
+    OrderView(payViewModel: .constant(PayViewModel()))
 }

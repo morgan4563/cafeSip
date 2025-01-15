@@ -14,6 +14,7 @@ class OrderViewModel {
     var storeId = ""
     var storeName = ""
     var menuItems = [MenuItem]()
+    var selectedMenu: MenuItem?
     
     func inputQRData(code: String) {
         print(code)
