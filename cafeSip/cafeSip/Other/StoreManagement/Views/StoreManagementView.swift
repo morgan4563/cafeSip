@@ -25,8 +25,8 @@ struct StoreManagementView: View {
                     .padding()
             }
             .sheet(isPresented: $showQRView) {
-                if let currentUserId = AuthManager.shared.currentAuthUser?.uid {
-                    QRCodeView(currentUserId: currentUserId)
+                if let currentStoreId = AuthManager.shared.currentStore?.id {
+                    QRCodeView(currentStoreId: currentStoreId)
                 } else {
                     Text("사용자 정보 수집 불가")
                 }
@@ -79,7 +79,7 @@ struct StoreManagementView: View {
 }
 
 struct QRCodeView: View {
-    var currentUserId: String
+    var currentStoreId: String
     
     var body: some View {
         VStack {
@@ -87,7 +87,7 @@ struct QRCodeView: View {
                 .font(.headline)
                 .padding(.top)
             
-            if let qrCodeImage = QRCodeGenerator.generateQRCode(from: currentUserId) {
+            if let qrCodeImage = QRCodeGenerator.generateQRCode(from: currentStoreId) {
                 Image(uiImage: qrCodeImage)
                     .resizable()
                     .interpolation(.none)
