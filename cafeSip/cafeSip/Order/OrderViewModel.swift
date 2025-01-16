@@ -13,6 +13,7 @@ class OrderViewModel {
     var currentStore: Store?
     var storeId = ""
     var storeName = ""
+    var ownerId = ""
     var menuItems = [MenuItem]()
     var selectedMenu: MenuItem?
     
@@ -27,6 +28,7 @@ class OrderViewModel {
             // 추후 예외처리 다시 해주기
             self.storeId = currentStore?.id ?? ""
             self.storeName = currentStore?.name ?? ""
+            self.ownerId = currentStore?.ownerId ?? ""
             self.menuItems = currentStore?.menuItems ?? [MenuItem]()
             print("loadStore 성공")
         } catch {

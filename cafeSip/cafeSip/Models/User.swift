@@ -11,6 +11,6 @@ struct User: Codable {
     let id: String
     let email: String
     var userName: String
-//    var balance: Int
+    var balance: Int
     var storeId: String?
 }

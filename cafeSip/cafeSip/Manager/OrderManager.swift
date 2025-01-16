@@ -12,7 +12,7 @@ class OrderManager {
     func createOrder(storeId: String, customerId: String, customerName: String, item: MenuItem) {
         let newOrderRef = Firestore.firestore().collection("orders").document()
         let orderId = newOrderRef.documentID
-        let orderData = Order(id: orderId, storeId: storeId, customerId: customerId, customerName: customerName, orderTime: Date(), orderStatus: "preparing", menuId: item.id, menuName: item.name, price: item.price)
+        let orderData = Order(id: orderId, storeId: storeId, customerId: customerId, customerName: customerName, orderTime: Date(), status: "preparing", menuId: item.id, menuName: item.name, price: item.price)
 
         do {
             try newOrderRef.setData(from: orderData) { error in

@@ -35,7 +35,7 @@ class AuthManager {
     }
     
     func uploadUserData(userId: String, email: String, userName: String) async {
-        let user = User(id: userId, email: email, userName: userName)
+        let user = User(id: userId, email: email, userName: userName, balance: 0)
         
         do {
             let encodedUser = try Firestore.Encoder().encode(user)
@@ -86,7 +86,7 @@ extension AuthManager {
         guard let userId = currentAuthUser?.uid else { return }
         
         let storeId = UUID().uuidString
-        let storeData = Store(id: storeId, name: storeName, address: storeAddress, detailAddress: storeDetailAddress, menuItems: nil)
+        let storeData = Store(id: storeId, ownerId: userId, name: storeName, address: storeAddress, detailAddress: storeDetailAddress, menuItems: nil)
         
         do {
             let encodedStore = try Firestore.Encoder().encode(storeData)

@@ -13,7 +13,7 @@ struct Order: Identifiable, Codable {
     var customerId : String
     var customerName: String
     var orderTime: Date
-    var orderStatus: String
+    var status: String
     var menuId: UUID
     var menuName: String
     var price: String

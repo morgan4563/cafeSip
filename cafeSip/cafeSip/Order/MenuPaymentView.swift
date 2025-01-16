@@ -30,13 +30,10 @@ struct MenuPaymentView: View {
                     .padding()
                 
                 Button {
-                    if payViewModel.balance >= Int(menu.price)! {
-                        payViewModel.balance -= Int(menu.price)!
-                        print("주문완료")
-                        OrderManager().createOrder(storeId: orderViewModel.storeId, customerId: payViewModel.userId, customerName: payViewModel.userName, item: menu)
-                    } else {
-                        print("잔액부족")
+                    Task {
+                        await payViewModel.processPayment(price: menu.price, ownerId: orderViewModel.ownerId)
                     }
+                    OrderManager().createOrder(storeId: orderViewModel.storeId, customerId: payViewModel.userId, customerName: payViewModel.userName, item: menu)
                 } label: {
                     Text("결제하기")
                 }
