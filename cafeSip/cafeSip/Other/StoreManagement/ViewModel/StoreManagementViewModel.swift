@@ -62,6 +62,7 @@ class StoreManagementViewModel {
     }
     
     func observeOrders(for storeId: String) {
+        print(storeId)
         listener = Firestore.firestore().collection("orders")
             .whereField("storeId", isEqualTo: storeId)
             .order(by: "orderTime", descending: false)
@@ -76,6 +77,7 @@ class StoreManagementViewModel {
                 self?.orders = documents.compactMap { doc in
                     try? doc.data(as: Order.self)
                 }
+                print("옵저빙된 주문 수 : \(self?.orders.count ?? 0)")
             }
     }
     
