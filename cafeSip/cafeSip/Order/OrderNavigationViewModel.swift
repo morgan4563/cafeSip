@@ -18,4 +18,10 @@ class OrderNavigationViewModel {
     func goToMenuPaymentView() {
         navigationPath.append("MenuPaymentView")
     }
+    func goToOrderStatusView() {
+        navigationPath.append("OrderStatusView")
+    }
+    func goToOrderView() {
+        navigationPath = NavigationPath()
+    }
 }

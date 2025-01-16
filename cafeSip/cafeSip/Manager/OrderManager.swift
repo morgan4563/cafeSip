@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseFirestore
 
 class OrderManager {
-    func createOrder(storeId: String, customerId: String, customerName: String, item: MenuItem) {
+    func createOrder(storeId: String, customerId: String, customerName: String, item: MenuItem) -> String {
         let newOrderRef = Firestore.firestore().collection("orders").document()
         let orderId = newOrderRef.documentID
         let orderData = Order(id: orderId, storeId: storeId, customerId: customerId, customerName: customerName, orderTime: Date(), status: "preparing", menuId: item.id, menuName: item.name, price: item.price)
@@ -25,5 +25,6 @@ class OrderManager {
         } catch {
             print("주문 데이터 변환 실패")
         }
+        return orderId
     }
 }

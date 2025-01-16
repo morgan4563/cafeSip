@@ -33,7 +33,10 @@ struct MenuPaymentView: View {
                     Task {
                         await payViewModel.processPayment(price: menu.price, ownerId: orderViewModel.ownerId)
                     }
-                    OrderManager().createOrder(storeId: orderViewModel.storeId, customerId: payViewModel.userId, customerName: payViewModel.userName, item: menu)
+                    let orderId = OrderManager().createOrder(storeId: orderViewModel.storeId, customerId: payViewModel.userId, customerName: payViewModel.userName, item: menu)
+                    orderViewModel.orderId = orderId
+                    orderViewModel.orderStatus = "preparing"
+                    navigationViewModel.goToOrderStatusView()
                 } label: {
                     Text("결제하기")
                 }

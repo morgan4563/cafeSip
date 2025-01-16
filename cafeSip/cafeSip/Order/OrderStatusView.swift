@@ -8,12 +8,37 @@
 import SwiftUI
 
 struct OrderStatusView: View {
+    @Binding var orderViewModel: OrderViewModel
+    @Binding var navigationViewModel: OrderNavigationViewModel
+    
     var body: some View {
-        Text("메뉴가 준비중")
-        
+        VStack {
+            if orderViewModel.orderStatus == "preparing" {
+                Text("주문 준비 중입니다..")
+                    .onAppear {
+                        orderViewModel.observeStatus()
+                    }
+            } else if orderViewModel.orderStatus == "Ready"  {
+                Text("주문이 준비되었습니다")
+                    
+            } else if orderViewModel.orderStatus == "Deleted" {
+                Text("주문이 완료되었습니다")
+                    .onAppear {
+                        orderViewModel.stopOvserving()
+                    }
+                Button {
+                    navigationViewModel.goToOrderView()
+                } label: {
+                    Text("첫 페이지로 돌아가기")
+                }
+            }
+        }
+        .onDisappear {
+            orderViewModel.stopOvserving()
+        }
     }
 }
 
 #Preview {
-    OrderStatusView()
+    OrderStatusView(orderViewModel: .constant(OrderViewModel()), navigationViewModel: .constant(OrderNavigationViewModel()))
 }

@@ -17,6 +17,12 @@ class OrderViewModel {
     var menuItems = [MenuItem]()
     var selectedMenu: MenuItem?
     
+    var orderId = ""
+    var orderStatus = ""
+    
+    var listener: ListenerRegistration?
+    
+    
     func inputQRData(code: String) {
         print(code)
         self.storeId = code
@@ -34,5 +40,41 @@ class OrderViewModel {
         } catch {
             print("스토어 데이터 로드 실패")
         }
+    }
+    
+    func observeStatus() {
+        listener = Firestore.firestore().collection("orders").document(orderId)
+            .addSnapshotListener{ [weak self] snapshot, error in
+                if let error = error {
+                    print("옵저빙 실패: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let snapshot = snapshot else {
+                    print("snapshot nil")
+                    return
+                }
+                
+                print("Firestore 리스너 호출")
+                print("문서 ,\(self?.orderId ?? "" )")
+                print("문서 존재, \(snapshot.exists)")
+                print("문서 데이터, \(snapshot.data() ?? [:])")
+                
+                if snapshot.exists {
+                    guard let document = snapshot.data() else { return }
+                    if let status = document["status"] as? String {
+                        self?.orderStatus = status
+                        print("orderStatus : \(self?.orderStatus ?? "")")
+                    }
+                } else {
+                    print("오더 삭제됨")
+                    self?.orderStatus = "Deleted"
+                }
+            }
+    }
+    
+    func stopOvserving() {
+        listener?.remove()
+        listener = nil
     }
 }
