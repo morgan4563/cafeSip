@@ -21,11 +21,21 @@ struct OrderProcessingView: View {
             
             ScrollView {
                 LazyVStack(alignment: .leading) {
-                    Text("들어온 주문 보여주는곳")
-                    Text("들어온 주문 보여주는곳")
-                    Text("들어온 주문 보여주는곳")
-                    Text("들어온 주문 보여주는곳")
-                    Text("들어온 주문 보여주는곳")
+                    ForEach(viewModel.orders) { order in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("주문자 : \(order.customerName)")
+                            Text("메뉴 ID : \(order.menuId)")
+                            Text("가격 : \(order.price)원")
+                            Text("주문 시간 : \(order.orderTime, style: .time)")
+                            Button() {
+                                viewModel.deleteOrder(orderId: order.id)
+                            } label: {
+                                Text("주문완료")
+                                    .foregroundStyle(.red)
+                            }
+                            
+                        }
+                    }
                 }
                 .padding()
             }
@@ -43,6 +53,12 @@ struct OrderProcessingView: View {
             }
         }
         .toolbar(.hidden, for: .tabBar)
+        .onAppear {
+            viewModel.observeOrders(for: viewModel.storeId)
+        }
+        .onDisappear {
+            viewModel.stopObservingOrders()
+        }
     }
 }
 

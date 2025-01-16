@@ -74,6 +74,8 @@ struct OtherView: View {
                     StoreManagementView(viewModel: $storeManagementViewModel, navigationViewModel: $otherNavigationViewModel)
                 case "MenuRegistrationView":
                     MenuRegistrationView(viewModel: $storeManagementViewModel,navigationViewModel: $otherNavigationViewModel)
+                case "OrderProcessingView":
+                    OrderProcessingView(viewModel: $storeManagementViewModel, navigationViewModel: $otherNavigationViewModel)
                 default:
                     Text("잘못된접근")
                 }

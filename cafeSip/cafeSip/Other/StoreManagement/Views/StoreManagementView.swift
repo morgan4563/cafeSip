@@ -60,7 +60,11 @@ struct StoreManagementView: View {
             }
             Spacer()
             
-            Text("주문 알림 확인")
+            Button {
+                navigationViewModel.goToOrderProcessingView()
+            } label: {
+                Text("주문 확인")
+            }
         }
         .navigationBarBackButtonHidden()
         .toolbar {

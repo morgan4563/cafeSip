@@ -5,7 +5,6 @@
 //  Created by hyunMac on 1/14/25.
 //
 import SwiftUI
-import NMapsMap
 import FirebaseFirestore
 
 @Observable
@@ -17,6 +16,9 @@ class StoreManagementViewModel {
     var newMenuName = ""
     var newMenuDescription = ""
     var newMenuPrice = ""
+    
+    var listener: ListenerRegistration?
+    var orders: [Order] = []
     
     func getStoreData() {
         guard let storeData = AuthManager.shared.currentStore else {
@@ -57,5 +59,38 @@ class StoreManagementViewModel {
         newMenuName = ""
         newMenuDescription = ""
         newMenuPrice = ""
+    }
+    
+    func observeOrders(for storeId: String) {
+        listener = Firestore.firestore().collection("orders")
+            .whereField("storeId", isEqualTo: storeId)
+            .order(by: "orderTime", descending: false)
+            .addSnapshotListener { [weak self] snapshot, error in
+                if let error = error {
+                    print("주문데이터 옵저빙실패 \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let documents = snapshot?.documents else { return }
+                
+                self?.orders = documents.compactMap { doc in
+                    try? doc.data(as: Order.self)
+                }
+            }
+    }
+    
+    func stopObservingOrders() {
+        listener?.remove()
+        listener = nil
+    }
+    
+    func deleteOrder(orderId: String) {
+        Firestore.firestore().collection("orders").document(orderId).delete() { error in
+            if let error = error {
+                print("주문 삭제 실패 \(error.localizedDescription)")
+            }else {
+                print("주문 삭제 성공")
+            }
+        }
     }
 }

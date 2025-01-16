@@ -33,6 +33,7 @@ struct MenuPaymentView: View {
                     if payViewModel.balance >= Int(menu.price)! {
                         payViewModel.balance -= Int(menu.price)!
                         print("주문완료")
+                        OrderManager().createOrder(storeId: orderViewModel.storeId, customerId: payViewModel.userId, customerName: payViewModel.userName, item: menu)
                     } else {
                         print("잔액부족")
                     }
