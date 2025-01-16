@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CompleteSignupView: View {
     @Binding var loginViewModel: LoginViewModel
-    
+    @Binding var loginNavigtionViewModel: LoginNavigationViewModel
     var body: some View {
         VStack {
             Text("아이디 생성완료.")
@@ -30,7 +30,7 @@ struct CompleteSignupView: View {
                 Task {
                     await loginViewModel.createUser()
                 }
-                loginViewModel.goToLoginView()
+                loginNavigtionViewModel.goToLoginView()
             } label: {
                 Text("완료")
                     .fontWeight(.semibold)

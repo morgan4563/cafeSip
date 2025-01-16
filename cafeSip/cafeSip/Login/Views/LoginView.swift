@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct LoginView: View {
-    @Binding var loginViewModel: LoginViewModel
+    @State private var loginViewModel = LoginViewModel()
+    @State private var loginNavigtionViewModel = LoginNavigationViewModel()
     
     var body: some View {
-        NavigationStack(path: $loginViewModel.navigationPath) {
+        NavigationStack(path: $loginNavigtionViewModel.navigationPath) {
             VStack() {
                 Spacer()
                 
@@ -49,7 +50,7 @@ struct LoginView: View {
                 }
                 
                 Button("회원가입") {
-                    loginViewModel.goToSignupEmailView()
+                    loginNavigtionViewModel.goToSignupEmailView()
                 }
                 .font(.subheadline)
                 .foregroundStyle(.brown)
@@ -71,17 +72,16 @@ struct LoginView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
             }
-            // 화면 전환 담당
             .navigationDestination(for: String.self) { value in
                 switch value {
                 case "SignupEmailView":
-                    SignupEmailView(loginViewModel: $loginViewModel)
+                    SignupEmailView(loginViewModel: $loginViewModel, loginNavigtionViewModel: $loginNavigtionViewModel)
                 case "SignupPasswordView":
-                    SignupPasswordView(loginViewModel: $loginViewModel)
+                    SignupPasswordView(loginViewModel: $loginViewModel, loginNavigtionViewModel: $loginNavigtionViewModel)
                 case "SignupUserNameView":
-                    SignupUserNameView(loginViewModel: $loginViewModel)
+                    SignupUserNameView(loginViewModel: $loginViewModel, loginNavigtionViewModel: $loginNavigtionViewModel)
                 case "CompleteSignupView":
-                    CompleteSignupView(loginViewModel: $loginViewModel)
+                    CompleteSignupView(loginViewModel: $loginViewModel, loginNavigtionViewModel: $loginNavigtionViewModel)
                 default:
                     Text("잘못된 접근")
                 }
@@ -90,6 +90,6 @@ struct LoginView: View {
     }
 }
 
-//#Preview {
-//    LoginView(loginViewModel: .constant(LoginViewModel()))
-//}
+#Preview {
+    LoginView()
+}

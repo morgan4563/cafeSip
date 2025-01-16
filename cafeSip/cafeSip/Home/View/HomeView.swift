@@ -14,7 +14,7 @@ struct HomeView: View {
                 //- 메인이미지 시작
                 Rectangle()
                     .fill(Color.brown)
-                    .frame(width: .infinity, height: 200)
+                    .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 200)
                     .overlay() {
                         HStack {
                             Text("""

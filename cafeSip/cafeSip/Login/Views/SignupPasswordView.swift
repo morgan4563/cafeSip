@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SignupPasswordView: View {
     @Binding var loginViewModel: LoginViewModel
+    @Binding var loginNavigtionViewModel: LoginNavigationViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -36,7 +37,7 @@ struct SignupPasswordView: View {
             Spacer()
             
             Button("다음") {
-                loginViewModel.goToSignupUserNameView()
+                loginNavigtionViewModel.goToSignupUserNameView()
             }
             .fontWeight(.semibold)
             .foregroundStyle(.white)
