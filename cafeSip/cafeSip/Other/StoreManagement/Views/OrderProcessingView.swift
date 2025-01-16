@@ -11,6 +11,7 @@ struct OrderProcessingView: View {
     @Binding var viewModel: StoreManagementViewModel
     @Binding var navigationViewModel: OtherNavigationViewModel
     @Environment(\.dismiss) var dismiss
+    @State var completedOrders: Set<String> = []
     
     var body: some View {
         VStack {
@@ -27,13 +28,22 @@ struct OrderProcessingView: View {
                             Text("메뉴 ID : \(order.menuId)")
                             Text("가격 : \(order.price)원")
                             Text("주문 시간 : \(order.orderTime, style: .time)")
-                            Button() {
-                                viewModel.deleteOrder(orderId: order.id)
-                            } label: {
-                                Text("주문완료")
-                                    .foregroundStyle(.red)
+                            if completedOrders.contains(order.id) {
+                                Button() {
+                                    viewModel.deleteOrder(orderId: order.id)
+                                } label: {
+                                    Text("주문삭제")
+                                        .foregroundStyle(.red)
+                                }
+                            } else {
+                                Button() {
+                                    viewModel.updateOrderStatus(orderId: order.id)
+                                    completedOrders.insert(order.id)
+                                } label: {
+                                    Text("주문완료")
+                                        .foregroundStyle(.red)
+                                }
                             }
-                            
                         }
                     }
                 }

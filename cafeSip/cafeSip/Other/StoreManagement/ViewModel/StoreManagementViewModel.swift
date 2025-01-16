@@ -86,6 +86,18 @@ class StoreManagementViewModel {
         listener = nil
     }
     
+    func updateOrderStatus(orderId: String) {
+        Firestore.firestore().collection("orders").document(orderId).updateData([
+            "status": "Ready"
+        ]) { error in
+            if let error = error {
+                print("주문상태 변경실패 \(error.localizedDescription)")
+            } else {
+                print("주문상태가 Ready로 업데이트 되었다")
+            }
+        }
+    }
+    
     func deleteOrder(orderId: String) {
         Firestore.firestore().collection("orders").document(orderId).delete() { error in
             if let error = error {
