@@ -82,25 +82,15 @@ class StoreManagementViewModel {
         listener = nil
     }
     
-    func updateOrderStatus(orderId: String) {
-        Firestore.firestore().collection("orders").document(orderId).updateData([
-            "status": "Ready"
-        ]) { error in
-            if let error = error {
-                print("주문상태 변경실패 \(error.localizedDescription)")
-            } else {
-                print("주문상태가 Ready로 업데이트 되었다")
-            }
-        }
+    func updateOrderStatus(orderId: String) async throws {
+        try await Firestore.firestore().collection("orders").document(orderId).updateData(["status": "Ready"])
     }
     
-    func deleteOrder(orderId: String) {
-        Firestore.firestore().collection("orders").document(orderId).delete() { error in
-            if let error = error {
-                print("주문 삭제 실패 \(error.localizedDescription)")
-            }else {
-                print("주문 삭제 성공")
-            }
+    func deleteOrder(orderId: String) async {
+        do {
+            try await Firestore.firestore().collection("orders").document(orderId).delete()
+        } catch {
+            print("주문 삭제 실패 \(error.localizedDescription)")
         }
     }
 }

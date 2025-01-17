@@ -44,7 +44,9 @@ struct OrderProcessingView: View {
                             Text("주문 시간 : \(order.orderTime, style: .time)")
                             if completedOrders.contains(order.id) {
                                 Button() {
-                                    viewModel.deleteOrder(orderId: order.id)
+                                    Task {
+                                        await viewModel.deleteOrder(orderId: order.id)
+                                    }
                                 } label: {
                                     HStack {
                                         Text("주문삭제")
@@ -56,8 +58,14 @@ struct OrderProcessingView: View {
                                 }
                             } else {
                                 Button() {
-                                    viewModel.updateOrderStatus(orderId: order.id)
-                                    completedOrders.insert(order.id)
+                                    Task {
+                                        do {
+                                            try await viewModel.updateOrderStatus(orderId: order.id)
+                                            completedOrders.insert(order.id)
+                                        } catch {
+                                            print("주문 상태 변경 실패")
+                                        }
+                                    }
                                 } label: {
                                     HStack{
                                         Text("주문완료")
