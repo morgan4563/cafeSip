@@ -52,7 +52,7 @@ struct OtherView: View {
                             await StoreManager.shared.loadCurrentStoreData(storeId: storeId)
                         }
                     }
-                    storeManagementViewModel.getStoreData()
+                    //getStoreData삭제
                     otherNavigationViewModel.goToStoreManagementView()
                 } label: {
                     Text("\(Image(systemName: "house.circle.fill"))매장관리")
@@ -76,11 +76,11 @@ struct OtherView: View {
                 
                     // storeManage
                 case "StoreManagementView":
-                    StoreManagementView(viewModel: $storeManagementViewModel, navigationViewModel: $otherNavigationViewModel)
+                    StoreManagementView(storeManagementViewModel: $storeManagementViewModel, navigationViewModel: $otherNavigationViewModel)
                 case "MenuRegistrationView":
-                    MenuRegistrationView(viewModel: $storeManagementViewModel,navigationViewModel: $otherNavigationViewModel)
+                    MenuRegistrationView(storeManagementViewModel: $storeManagementViewModel,navigationViewModel: $otherNavigationViewModel)
                 case "OrderProcessingView":
-                    OrderProcessingView(viewModel: $storeManagementViewModel, navigationViewModel: $otherNavigationViewModel)
+                    OrderProcessingView(storeManagementViewModel: $storeManagementViewModel, navigationViewModel: $otherNavigationViewModel)
                 default:
                     Text("잘못된접근")
                 }

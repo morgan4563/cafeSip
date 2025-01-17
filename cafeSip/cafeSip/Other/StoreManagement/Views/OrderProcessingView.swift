@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OrderProcessingView: View {
-    @Binding var viewModel: StoreManagementViewModel
+    @Binding var storeManagementViewModel: StoreManagementViewModel
     @Binding var navigationViewModel: OtherNavigationViewModel
     @Environment(\.dismiss) var dismiss
     
@@ -18,7 +18,7 @@ struct OrderProcessingView: View {
                 Text("주문목록")
                     .font(.title)
                     .fontWeight(.semibold)
-                Text(viewModel.storeName)
+                Text(StoreManager.shared.currentStore?.name ?? "스토어 이름을 불러올 수 없음")
                     .font(.title2)
                     .fontWeight(.medium)
                     .foregroundStyle(.brown)
@@ -32,19 +32,19 @@ struct OrderProcessingView: View {
             
             ScrollView {
                 LazyVStack(alignment: .leading) {
-                    if viewModel.orders.isEmpty {
+                    if storeManagementViewModel.orders.isEmpty {
                         Text("들어온 주문이 없습니다")
                             .fontWeight(.semibold)
                     }
-                    ForEach(viewModel.orders) { order in
+                    ForEach(storeManagementViewModel.orders) { order in
                         VStack(alignment: .leading) {
                             Text("주문자 : \(order.customerName)")
                             Text("메뉴명 : \(order.menuName)")
                             Text("주문 시간 : \(order.orderTime, style: .time)")
-                            if viewModel.completedOrders.contains(order.id) {
+                            if storeManagementViewModel.completedOrders.contains(order.id) {
                                 Button() {
                                     Task {
-                                        await viewModel.deleteOrder(orderId: order.id)
+                                        await storeManagementViewModel.deleteOrder(orderId: order.id)
                                     }
                                 } label: {
                                     HStack {
@@ -59,8 +59,8 @@ struct OrderProcessingView: View {
                                 Button() {
                                     Task {
                                         do {
-                                            try await viewModel.updateOrderStatus(orderId: order.id)
-                                            viewModel.completedOrders.insert(order.id)
+                                            try await storeManagementViewModel.updateOrderStatus(orderId: order.id)
+                                            storeManagementViewModel.completedOrders.insert(order.id)
                                         } catch {
                                             print("주문 상태 변경 실패")
                                         }
@@ -96,14 +96,18 @@ struct OrderProcessingView: View {
         }
         .toolbar(.hidden, for: .tabBar)
         .onAppear {
-            viewModel.observeOrders(for: viewModel.storeId)
+            guard let storeId = StoreManager.shared.currentStore?.id else {
+                print("currentStoreId 존재하지않음")
+                return
+            }
+            storeManagementViewModel.observeOrders(storeId: storeId)
         }
         .onDisappear {
-            viewModel.stopObservingOrders()
+            storeManagementViewModel.stopObservingOrders()
         }
     }
 }
 
 #Preview {
-    OrderProcessingView(viewModel: .constant(StoreManagementViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
+    OrderProcessingView(storeManagementViewModel: .constant(StoreManagementViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
 }

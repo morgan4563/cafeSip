@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MenuRegistrationView: View {
-    @Binding var viewModel: StoreManagementViewModel
+    @Binding var storeManagementViewModel: StoreManagementViewModel
     @Binding var navigationViewModel: OtherNavigationViewModel
     @Environment(\.dismiss) var dismiss
     
@@ -25,11 +25,11 @@ struct MenuRegistrationView: View {
             
             VStack(alignment: .leading) {
                 Text("메뉴명")
-                TextField("메뉴명",text: $viewModel.newMenuName)
+                TextField("메뉴명",text: $storeManagementViewModel.newMenuName)
                 Text("메뉴설명")
-                TextField("메뉴설명",text: $viewModel.newMenuDescription)
+                TextField("메뉴설명",text: $storeManagementViewModel.newMenuDescription)
                 Text("가격")
-                TextField("가격",text: $viewModel.newMenuPrice)
+                TextField("가격",text: $storeManagementViewModel.newMenuPrice)
             }
             .font(.title3)
             .fontWeight(.semibold)
@@ -38,7 +38,11 @@ struct MenuRegistrationView: View {
             Spacer()
             
             Button {
-                viewModel.addMenuItem()
+                guard let storeId = StoreManager.shared.currentStore?.id else {
+                    print("currentStoreId 존재하지않음")
+                    return
+                }
+                storeManagementViewModel.addMenuItem(storeId: storeId)
                 dismiss()
             } label: {
                 Text("메뉴등록")
@@ -64,5 +68,5 @@ struct MenuRegistrationView: View {
 }
 
 #Preview {
-    MenuRegistrationView(viewModel: .constant(StoreManagementViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
+    MenuRegistrationView(storeManagementViewModel: .constant(StoreManagementViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
 }

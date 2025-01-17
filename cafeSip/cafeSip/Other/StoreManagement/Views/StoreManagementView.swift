@@ -9,14 +9,14 @@ import SwiftUI
 import CoreImage.CIFilterBuiltins
 
 struct StoreManagementView: View {
-    @Binding var viewModel: StoreManagementViewModel
+    @Binding var storeManagementViewModel: StoreManagementViewModel
     @Binding var navigationViewModel: OtherNavigationViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack {
             Button {
-                viewModel.showQRView = true
+                storeManagementViewModel.showQRView = true
             } label: {
                 HStack{
                     Image(systemName: "qrcode")
@@ -27,7 +27,7 @@ struct StoreManagementView: View {
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding()
             }
-            .sheet(isPresented: $viewModel.showQRView) {
+            .sheet(isPresented: $storeManagementViewModel.showQRView) {
                 if let currentStoreId = StoreManager.shared.currentStore?.id {
                     QRCodeView(currentStoreId: currentStoreId)
                 } else {
@@ -35,7 +35,7 @@ struct StoreManagementView: View {
                 }
             }
             
-            Text(viewModel.storeName)
+            Text(StoreManager.shared.currentStore?.name ?? "")
                 .font(.title)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -56,7 +56,7 @@ struct StoreManagementView: View {
             
             ScrollView {
                 LazyVStack(alignment: .leading) {
-                    ForEach(viewModel.menuItems) { menu in
+                    ForEach(StoreManager.shared.currentStore?.menuItems ?? []) { menu in
                         HStack {
                             Text(menu.name)
                                 .font(.headline)
@@ -98,5 +98,5 @@ struct StoreManagementView: View {
 }
 
 #Preview {
-    StoreManagementView(viewModel: .constant(StoreManagementViewModel()),navigationViewModel: .constant(OtherNavigationViewModel()))
+    StoreManagementView(storeManagementViewModel: .constant(StoreManagementViewModel()),navigationViewModel: .constant(OtherNavigationViewModel()))
 }

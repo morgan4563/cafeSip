@@ -9,10 +9,6 @@ import FirebaseFirestore
 
 @Observable
 class StoreManagementViewModel {
-    var storeId = ""
-    var storeName = ""
-    var menuItems = [MenuItem]()
-    
     var newMenuName = ""
     var newMenuDescription = ""
     var newMenuPrice = ""
@@ -23,17 +19,7 @@ class StoreManagementViewModel {
     var orders: [Order] = []
     var completedOrders: Set<String> = []
     
-    func getStoreData() {
-        guard let storeData = StoreManager.shared.currentStore else {
-            print("storeData불러오기 실패")
-            return
-        }
-        self.storeId = storeData.id
-        self.storeName = storeData.name
-        self.menuItems = storeData.menuItems ?? []
-    }
-    
-    func addMenuItem() {
+    func addMenuItem(storeId: String) {
         guard newMenuName != "" && newMenuDescription != "" && newMenuPrice != "" else {
             print("모든 필드를 올바르게 입력해야 합니다.")
             return
@@ -46,10 +32,17 @@ class StoreManagementViewModel {
             storeRef.updateData([
                 "menuItems": FieldValue.arrayUnion([menuData])
             ])
-            menuItems.append(newMenu)
+            if var currentStore = StoreManager.shared.currentStore {
+                if currentStore.menuItems == nil {
+                    currentStore.menuItems = []
+                }
+                currentStore.menuItems?.append(newMenu)
+                //Store Class로 변경할지 재할당할지 고민 다시 해볼것
+                StoreManager.shared.currentStore = currentStore
+            }
             clearFields()
         } catch {
-            print("Firestore 데이터 인코딩 실패")
+            print("메뉴 추가 실패 에러")
         }
     }
     func clearFields() {
@@ -58,7 +51,7 @@ class StoreManagementViewModel {
         newMenuPrice = ""
     }
     
-    func observeOrders(for storeId: String) {
+    func observeOrders(storeId: String) {
         stopObservingOrders()
         listener = Firestore.firestore().collection("orders")
             .whereField("storeId", isEqualTo: storeId)
