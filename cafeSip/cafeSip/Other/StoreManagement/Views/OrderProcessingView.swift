@@ -15,36 +15,61 @@ struct OrderProcessingView: View {
     
     var body: some View {
         VStack {
-//            Text(viewModel.storeName)
-            Text("카페이름")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
+            HStack(alignment: .firstTextBaseline){
+                Text("주문목록")
+                    .font(.title)
+                    .fontWeight(.semibold)
+                Text(viewModel.storeName)
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.brown)
+                    .opacity(0.8)
+                
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal)
+            
+            Divider()
             
             ScrollView {
                 LazyVStack(alignment: .leading) {
+                    if viewModel.orders.isEmpty {
+                        Text("들어온 주문이 없습니다")
+                            .fontWeight(.semibold)
+                    }
                     ForEach(viewModel.orders) { order in
-                        VStack(alignment: .leading, spacing: 4) {
+                        VStack(alignment: .leading) {
                             Text("주문자 : \(order.customerName)")
-                            Text("메뉴 ID : \(order.menuId)")
-                            Text("가격 : \(order.price)원")
+                            Text("메뉴명 : \(order.menuName)")
                             Text("주문 시간 : \(order.orderTime, style: .time)")
                             if completedOrders.contains(order.id) {
                                 Button() {
                                     viewModel.deleteOrder(orderId: order.id)
                                 } label: {
-                                    Text("주문삭제")
-                                        .foregroundStyle(.red)
+                                    HStack {
+                                        Text("주문삭제")
+                                            .foregroundStyle(.red)
+                                        Text("고객이 메뉴를 수령하면 눌러주세요")
+                                            .foregroundStyle(.gray)
+                                            .opacity(0.5)
+                                    }
                                 }
                             } else {
                                 Button() {
                                     viewModel.updateOrderStatus(orderId: order.id)
                                     completedOrders.insert(order.id)
                                 } label: {
-                                    Text("주문완료")
-                                        .foregroundStyle(.red)
+                                    HStack{
+                                        Text("주문완료")
+                                            .foregroundStyle(.green)
+                                        Text("메뉴 준비가 완료되면 눌러주세요")
+                                            .foregroundStyle(.gray)
+                                            .opacity(0.5)
+                                    }
                                 }
                             }
                         }
+                        .fontWeight(.semibold)
                     }
                 }
                 .padding()

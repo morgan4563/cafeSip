@@ -20,9 +20,14 @@ struct StoreManagementView: View {
             Button {
                 showQRView = true
             } label: {
-                Text("QR확인")
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding()
+                HStack{
+                    Image(systemName: "qrcode")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(.black).opacity(0.8)
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding()
             }
             .sheet(isPresented: $showQRView) {
                 if let currentStoreId = StoreManager.shared.currentStore?.id {
@@ -33,16 +38,23 @@ struct StoreManagementView: View {
             }
             
             Text(viewModel.storeName)
+                .font(.title)
+                .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
+                .padding(.horizontal)
             
             Button {
                 navigationViewModel.goToMenuRegistrationView()
             } label: {
                 Text("메뉴등록")
+                    .foregroundStyle(.brown)
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
-            .padding()
+            .padding(.horizontal)
+            
+            Rectangle()
+                .frame(maxWidth: .infinity, minHeight: 1, maxHeight: 1)
+                .foregroundStyle(.black).opacity(0.5)
             
             ScrollView {
                 LazyVStack(alignment: .leading) {
@@ -55,6 +67,7 @@ struct StoreManagementView: View {
                             Spacer()
                             Text("\(menu.price)원")
                         }
+                        .padding(.horizontal)
                     }
                 }
             }
@@ -64,6 +77,11 @@ struct StoreManagementView: View {
                 navigationViewModel.goToOrderProcessingView()
             } label: {
                 Text("주문 확인")
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .frame(width: 363, height: 42)
+                    .background(.brown)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
             }
         }
         .navigationBarBackButtonHidden()
