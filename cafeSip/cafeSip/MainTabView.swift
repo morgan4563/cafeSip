@@ -15,25 +15,39 @@ struct MainTabView: View {
         TabView(selection: $tabIndex) {
             HomeView()
                 .tabItem {
-                    Image(systemName: "house.fill")
+                    VStack {
+                        Image(systemName: "house.fill")
+                        Text("Home")
+                    }
                 }
                 .tag(0)
             PayView(viewModel: $payViewModel)
                 .tabItem {
-                    Image(systemName: "creditcard.fill")
+                    VStack {
+                        Image(systemName: "creditcard.fill")
+                        Text("Pay")
+                    }
+                    
                 }
                 .tag(1)
             OrderView(payViewModel: $payViewModel)
                 .tabItem {
-                    Image(systemName: "mug.fill")
+                    VStack {
+                        Image(systemName: "mug.fill")
+                        Text("Order")
+                    }
+                    
                 }
                 .tag(2)
             OtherView()
                 .tabItem {
-                    Image(systemName: "ellipsis")
+                    VStack {
+                        Image(systemName: "ellipsis")
+                        Text("Other")
+                    }
                 }
                 .tag(3)
-        }
+        }.accentColor(.brown)
     }
 }
 
