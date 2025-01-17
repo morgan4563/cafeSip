@@ -29,32 +29,37 @@ struct OtherView: View {
                     .padding(.horizontal, 16)
                     .padding(.bottom, 4)
                 
-                Button("\(Image(systemName: "house.circle.fill"))매장등록") {
-                    guard AuthManager.shared.currentStore == nil else {
+                Button {
+                    guard StoreManager.shared.currentStore == nil else {
                         print("이미 등록된 매장이 있음")
                         return
                     }
                     otherNavigationViewModel.goToAddressSelectionView()
+                } label: {
+                    Text("\(Image(systemName: "house.circle.fill"))매장등록")
+                        .padding(.horizontal, 16)
+                        .foregroundStyle(.black)
+                        .opacity(0.8)
                 }
-                .padding(.horizontal, 16)
-                .foregroundStyle(.black)
-                .opacity(0.8)
                 
-                Button("\(Image(systemName: "house.circle.fill"))매장관리") {
-                    guard AuthManager.shared.currentStore != nil else {
+                Button {
+                    guard StoreManager.shared.currentStore != nil else {
                         print("매장등록이 먼저 진행되어야한다")
                         return
                     }
                     Task {
-                       await AuthManager.shared.loadCurrentStoreData()
+                        if let storeId = AuthManager.shared.currentUser?.storeId {
+                            await StoreManager.shared.loadCurrentStoreData(storeId: storeId)
+                        }
                     }
                     storeManagementViewModel.getStoreData()
                     otherNavigationViewModel.goToStoreManagementView()
+                } label: {
+                    Text("\(Image(systemName: "house.circle.fill"))매장관리")
+                        .padding(16)
+                        .foregroundStyle(.black)
+                        .opacity(0.8)
                 }
-                .padding(16)
-                .foregroundStyle(.black)
-                .opacity(0.8)
-                
                 Spacer()
             }
             .navigationDestination(for: String.self) { value in

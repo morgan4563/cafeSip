@@ -25,7 +25,7 @@ struct StoreManagementView: View {
                     .padding()
             }
             .sheet(isPresented: $showQRView) {
-                if let currentStoreId = AuthManager.shared.currentStore?.id {
+                if let currentStoreId = StoreManager.shared.currentStore?.id {
                     QRCodeView(currentStoreId: currentStoreId)
                 } else {
                     Text("사용자 정보 수집 불가")

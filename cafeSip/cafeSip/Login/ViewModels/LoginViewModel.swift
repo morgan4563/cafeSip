@@ -15,6 +15,11 @@ class LoginViewModel {
     
     func signIn() async {
         await AuthManager.shared.signIn(email: email, password: password)
+        
+        if let storeId = AuthManager.shared.currentUser?.storeId {
+            await StoreManager.shared.loadCurrentStoreData(storeId: storeId)
+        }
+        
     }
     
     func createUser() async {

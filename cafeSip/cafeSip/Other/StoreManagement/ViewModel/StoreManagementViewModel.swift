@@ -21,7 +21,7 @@ class StoreManagementViewModel {
     var orders: [Order] = []
     
     func getStoreData() {
-        guard let storeData = AuthManager.shared.currentStore else {
+        guard let storeData = StoreManager.shared.currentStore else {
             print("storeData불러오기 실패")
             return
         }
