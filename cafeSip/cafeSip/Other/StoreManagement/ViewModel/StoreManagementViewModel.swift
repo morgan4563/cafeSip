@@ -17,6 +17,8 @@ class StoreManagementViewModel {
     var newMenuDescription = ""
     var newMenuPrice = ""
     
+    var showQRView = false
+    
     var listener: ListenerRegistration?
     var orders: [Order] = []
     
