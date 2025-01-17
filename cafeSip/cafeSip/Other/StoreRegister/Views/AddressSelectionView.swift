@@ -27,7 +27,7 @@ struct AddressSelectionView: View {
             
             Divider()
             ZStack {
-                NaverMapView(viewModel: $storeRegisterViewModel)
+                NaverMapView(storeRegisterViewModel: $storeRegisterViewModel)
                     .frame(maxWidth: .infinity)
                 Image(systemName: "mappin")
                     .resizable()
