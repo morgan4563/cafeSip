@@ -24,11 +24,10 @@ struct AddressDetailView: View {
                 .font(.callout)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
-            
-            Divider()
+                .padding(.bottom, 5)
             
             Text(storeRegisterViewModel.address)
-                .font(.title2)
+                .font(.title3)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)

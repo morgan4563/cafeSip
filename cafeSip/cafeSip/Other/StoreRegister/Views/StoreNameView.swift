@@ -24,8 +24,12 @@ struct StoreNameView: View {
                 .font(.callout)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
+                .padding(.bottom, 5)
             
             TextField("매장 이름",text: $storeRegisterViewModel.storeName)
+                .font(.title3)
+                .fontWeight(.semibold)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             Rectangle()
                 .frame(height: 1)
