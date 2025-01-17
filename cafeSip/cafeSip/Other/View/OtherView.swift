@@ -60,6 +60,16 @@ struct OtherView: View {
                         .foregroundStyle(.black)
                         .opacity(0.8)
                 }
+                
+                Divider()
+                
+                Button {
+                    AuthManager.shared.signOut()
+                } label: {
+                    Text("로그아웃")
+                        .padding()
+                }
+                
                 Spacer()
             }
             .navigationDestination(for: String.self) { value in

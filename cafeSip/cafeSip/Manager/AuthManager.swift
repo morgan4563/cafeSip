@@ -52,6 +52,16 @@ class AuthManager {
         }
     }
     
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+            currentAuthUser = nil
+            currentUser = nil
+        } catch {
+            print("로그아웃 실패 \(error.localizedDescription)")
+        }
+    }
+    
     func loadCurrentUserData() async {
         guard let userId = currentAuthUser?.uid else { return }
         do {
