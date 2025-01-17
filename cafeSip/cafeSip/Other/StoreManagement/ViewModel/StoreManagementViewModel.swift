@@ -58,7 +58,7 @@ class StoreManagementViewModel {
     }
     
     func observeOrders(for storeId: String) {
-        print(storeId)
+        stopObservingOrders()
         listener = Firestore.firestore().collection("orders")
             .whereField("storeId", isEqualTo: storeId)
             .order(by: "orderTime", descending: false)
