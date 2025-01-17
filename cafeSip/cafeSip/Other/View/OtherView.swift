@@ -66,13 +66,13 @@ struct OtherView: View {
                 switch value {
                     // storeRegistration
                 case "AddressSelectionView":
-                    AddressSelectionView(viewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
+                    AddressSelectionView(storeRegisterViewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
                 case "AddressDetailView":
-                    AddressDetailView(viewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
+                    AddressDetailView(storeRegisterViewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
                 case "StoreNameView":
-                    StoreNameView(viewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
+                    StoreNameView(storeRegisterViewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
                 case "CompleteStoreRegistrationView":
-                    CompleteStoreRegistrationView(viewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
+                    CompleteStoreRegistrationView(storeRegisterViewModel: $storeRegisterViewModel, navigationViewModel: $otherNavigationViewModel)
                 
                     // storeManage
                 case "StoreManagementView":

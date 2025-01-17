@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddressDetailView: View {
-    @Binding var viewModel: StoreRegisterViewModel
+    @Binding var storeRegisterViewModel: StoreRegisterViewModel
     @Binding var navigationViewModel: OtherNavigationViewModel
     @Environment(\.dismiss) var dismiss
     
@@ -27,13 +27,13 @@ struct AddressDetailView: View {
             
             Divider()
             
-            Text(viewModel.address)
+            Text(storeRegisterViewModel.address)
                 .font(.title2)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             
-            TextField("상세 주소를 입력하세요", text: $viewModel.detailAddress)
+            TextField("상세 주소를 입력하세요", text: $storeRegisterViewModel.detailAddress)
                 .font(.title3)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -72,5 +72,5 @@ struct AddressDetailView: View {
 }
 
 #Preview {
-    AddressDetailView(viewModel: .constant(StoreRegisterViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
+    AddressDetailView(storeRegisterViewModel: .constant(StoreRegisterViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
 }

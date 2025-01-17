@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StoreNameView: View {
-    @Binding var viewModel: StoreRegisterViewModel
+    @Binding var storeRegisterViewModel: StoreRegisterViewModel
     @Binding var navigationViewModel: OtherNavigationViewModel
     @Environment(\.dismiss) var dismiss
     
@@ -25,7 +25,7 @@ struct StoreNameView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             
-            TextField("매장 이름",text: $viewModel.storeName)
+            TextField("매장 이름",text: $storeRegisterViewModel.storeName)
                 .padding(.horizontal)
             Rectangle()
                 .frame(height: 1)
@@ -60,5 +60,5 @@ struct StoreNameView: View {
 }
 
 #Preview {
-    StoreNameView(viewModel: .constant(StoreRegisterViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
+    StoreNameView(storeRegisterViewModel: .constant(StoreRegisterViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddressSelectionView: View {
-    @Binding var viewModel: StoreRegisterViewModel
+    @Binding var storeRegisterViewModel: StoreRegisterViewModel
     @Binding var navigationViewModel: OtherNavigationViewModel
     @Environment(\.dismiss) var dismiss
     
@@ -27,7 +27,7 @@ struct AddressSelectionView: View {
             
             Divider()
             ZStack {
-                NaverMapView(viewModel: $viewModel)
+                NaverMapView(viewModel: $storeRegisterViewModel)
                     .frame(maxWidth: .infinity)
                 Image(systemName: "mappin")
                     .resizable()
@@ -41,7 +41,7 @@ struct AddressSelectionView: View {
                 .fill(.white)
                 .frame(maxWidth: .infinity, maxHeight: 50)
                 .overlay(alignment: .leading) {
-                    Text(viewModel.address)
+                    Text(storeRegisterViewModel.address)
                         .font(.body)
                         .fontWeight(.semibold)
                         .padding()
@@ -74,5 +74,5 @@ struct AddressSelectionView: View {
 }
 
 #Preview {
-    AddressSelectionView(viewModel: .constant(StoreRegisterViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
+    AddressSelectionView(storeRegisterViewModel: .constant(StoreRegisterViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CompleteStoreRegistrationView: View {
-    @Binding var viewModel: StoreRegisterViewModel
+    @Binding var storeRegisterViewModel: StoreRegisterViewModel
     @Binding var navigationViewModel: OtherNavigationViewModel
     @Environment(\.dismiss) var dismiss
     var body: some View {
@@ -17,13 +17,13 @@ struct CompleteStoreRegistrationView: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding()
-            Text("매장 주소 : \(viewModel.address)")
+            Text("매장 주소 : \(storeRegisterViewModel.address)")
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
-            Text("매장 상세 주소 : \(viewModel.detailAddress)")
+            Text("매장 상세 주소 : \(storeRegisterViewModel.detailAddress)")
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
-            Text("매장 이름 : \(viewModel.storeName)")
+            Text("매장 이름 : \(storeRegisterViewModel.storeName)")
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             Spacer()
@@ -34,7 +34,7 @@ struct CompleteStoreRegistrationView: View {
                 
             Button("매장 등록 완료") {
                 Task {
-                    await StoreManager.shared.uploadStoreData(storeAddress: viewModel.address, storeDetailAddress: viewModel.detailAddress, storeName: viewModel.storeName, ownerId: AuthManager.shared.currentUser?.id ?? "")
+                    await StoreManager.shared.uploadStoreData(storeAddress: storeRegisterViewModel.address, storeDetailAddress: storeRegisterViewModel.detailAddress, storeName: storeRegisterViewModel.storeName, ownerId: AuthManager.shared.currentUser?.id ?? "")
                     
                     AuthManager.shared.currentUser?.storeId = StoreManager.shared.currentStore?.id
                 }
@@ -58,5 +58,5 @@ struct CompleteStoreRegistrationView: View {
 }
 
 #Preview {
-    CompleteStoreRegistrationView(viewModel: .constant(StoreRegisterViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
+    CompleteStoreRegistrationView(storeRegisterViewModel: .constant(StoreRegisterViewModel()), navigationViewModel: .constant(OtherNavigationViewModel()))
 }

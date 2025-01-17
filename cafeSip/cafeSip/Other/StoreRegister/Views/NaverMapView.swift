@@ -8,7 +8,7 @@ import SwiftUI
 import NMapsMap
 
 struct NaverMapView: UIViewRepresentable {
-    @Binding var viewModel: StoreRegisterViewModel
+    @Binding var storeRegisterViewModel: StoreRegisterViewModel
     
     class Coordinator: NSObject, NMFMapViewCameraDelegate {
         var parent: NaverMapView
@@ -19,7 +19,7 @@ struct NaverMapView: UIViewRepresentable {
         
         func mapViewCameraIdle(_ mapView: NMFMapView) {
             let position = mapView.cameraPosition.target
-            parent.viewModel.getRoadAddress(from: position)
+            parent.storeRegisterViewModel.getRoadAddress(from: position)
         }
     }
     
