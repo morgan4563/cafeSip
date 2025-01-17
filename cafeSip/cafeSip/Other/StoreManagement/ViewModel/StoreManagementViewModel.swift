@@ -21,6 +21,7 @@ class StoreManagementViewModel {
     
     var listener: ListenerRegistration?
     var orders: [Order] = []
+    var completedOrders: Set<String> = []
     
     func getStoreData() {
         guard let storeData = StoreManager.shared.currentStore else {

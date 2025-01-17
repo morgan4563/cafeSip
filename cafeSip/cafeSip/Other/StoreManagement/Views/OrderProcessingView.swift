@@ -11,7 +11,6 @@ struct OrderProcessingView: View {
     @Binding var viewModel: StoreManagementViewModel
     @Binding var navigationViewModel: OtherNavigationViewModel
     @Environment(\.dismiss) var dismiss
-    @State var completedOrders: Set<String> = []
     
     var body: some View {
         VStack {
@@ -42,7 +41,7 @@ struct OrderProcessingView: View {
                             Text("주문자 : \(order.customerName)")
                             Text("메뉴명 : \(order.menuName)")
                             Text("주문 시간 : \(order.orderTime, style: .time)")
-                            if completedOrders.contains(order.id) {
+                            if viewModel.completedOrders.contains(order.id) {
                                 Button() {
                                     Task {
                                         await viewModel.deleteOrder(orderId: order.id)
@@ -61,7 +60,7 @@ struct OrderProcessingView: View {
                                     Task {
                                         do {
                                             try await viewModel.updateOrderStatus(orderId: order.id)
-                                            completedOrders.insert(order.id)
+                                            viewModel.completedOrders.insert(order.id)
                                         } catch {
                                             print("주문 상태 변경 실패")
                                         }
