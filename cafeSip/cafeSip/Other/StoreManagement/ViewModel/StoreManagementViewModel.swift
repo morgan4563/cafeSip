@@ -38,21 +38,15 @@ class StoreManagementViewModel {
             return
         }
         let newMenu = MenuItem(name: newMenuName, description: newMenuDescription, price: newMenuPrice)
-        menuItems.append(newMenu)
-        clearFields()
-        
         let storeRef = Firestore.firestore().collection("stores").document(storeId)
+        
         do {
             let menuData = try Firestore.Encoder().encode(newMenu)
             storeRef.updateData([
                 "menuItems": FieldValue.arrayUnion([menuData])
-            ]) { error in
-                if let error = error {
-                    print("Firebase 메뉴 추가 실패\(error)")
-                } else {
-                    print("Firebase 메뉴 추가 성공")
-                }
-            }
+            ])
+            menuItems.append(newMenu)
+            clearFields()
         } catch {
             print("Firestore 데이터 인코딩 실패")
         }

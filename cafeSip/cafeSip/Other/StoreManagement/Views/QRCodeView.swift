@@ -8,7 +8,6 @@ import SwiftUI
 
 struct QRCodeView: View {
     var currentStoreId: String
-    
     var body: some View {
         VStack {
             Text("QR 코드")
