@@ -18,9 +18,11 @@ class PayViewModel {
         self.userId = currentUser?.id ?? ""
     }
     
-    func chargePaymoney(amount: Int) {
+    func chargePaymoney(amount: Int) async -> Bool {
+        guard await getBalance() else { return false }
         balance += amount
         updateBalance()
+        return true
     }
     
     func updateBalance() {
@@ -29,12 +31,14 @@ class PayViewModel {
         )
     }
     
-    func getBalance() async {
+    func getBalance() async -> Bool {
         do {
             let user = try await Firestore.firestore().collection("users").document(userId).getDocument(as: User.self)
             balance = user.balance
         } catch {
             print("balanceData 수신 실패")
+            return false
         }
+        return true
     }
 }

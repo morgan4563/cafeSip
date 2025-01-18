@@ -15,7 +15,13 @@ struct PayView: View {
                 .font(.headline)
             
             Button {
-                viewModel.chargePaymoney(amount: 1000)
+                Task {
+                    if await viewModel.chargePaymoney(amount: 1000) {
+                        print("정상 충전됨")
+                    } else {
+                        print("충전실패 에러")
+                    }
+                }
             } label: {
                 Text("충전 1000원")
                     .padding()
@@ -23,17 +29,9 @@ struct PayView: View {
                     .background(.brown)
                     .cornerRadius(10)
             }
-            
-            Button {
-                Task {
-                    await viewModel.getBalance()
-                }
-            } label: {
-                Text("잔액 새로고침")
-                    .padding()
-                    .foregroundStyle(.white)
-                    .background(.brown)
-                    .cornerRadius(10)
+        }.onAppear {
+            Task {
+                await viewModel.getBalance()
             }
         }
     }

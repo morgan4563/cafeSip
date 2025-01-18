@@ -13,21 +13,29 @@ struct SelectMenuView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
+        VStack {
+            HStack(alignment: .firstTextBaseline) {
                 Text("Order")
                     .font(.title)
-                    .fontWeight(.bold)
+                    .fontWeight(.semibold)
                 Text(viewModel.storeName)
-            }.padding()
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.brown)
+                    .opacity(0.8)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal)
             
-            Divider()
+            Rectangle()
+                .frame(maxWidth: .infinity, minHeight: 1, maxHeight: 1)
+                .foregroundStyle(.black).opacity(0.5)
             
             Text("전체 메뉴")
                 .font(.title3)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .fontWeight(.semibold)
-                .padding(.horizontal, 16)
-                .padding(.bottom, 4)
+                .padding(.horizontal)
             
             ScrollView {
                 LazyVStack(alignment: .leading) {
@@ -40,22 +48,22 @@ struct SelectMenuView: View {
                                 Text(menu.description)
                                 Spacer()
                                 Text("\(menu.price)원")
-                                    .font(.subheadline)
+                                Button {
+                                    viewModel.selectedMenu = menu
+                                    navigationViewModel.goToMenuPaymentView()
+                                } label: {
+                                    Text("선택")
+                                        .padding()
+                                        .background(.brown)
+                                        .foregroundStyle(.white)
+                                        .cornerRadius(8)
+                                }
                             }
                             Spacer()
-                            Button {
-                                viewModel.selectedMenu = menu
-                                navigationViewModel.goToMenuPaymentView()
-                            } label: {
-                                Text("선택")
-                                    .padding()
-                                    .background(.brown)
-                                    .foregroundStyle(.white)
-                                    .cornerRadius(8)
-                            }
                         }
                     }
                 }
+                .padding()
             }
         }
         .navigationBarBackButtonHidden()

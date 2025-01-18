@@ -10,11 +10,14 @@ import SwiftUI
 struct MenuPaymentView: View {
     @Binding var viewModel: OrderViewModel
     @Binding var navigationViewModel: OrderNavigationViewModel
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         VStack {
+            Spacer()
             Text("이미지")
             Spacer()
-            Text("개인자산 : \(viewModel.balance)")
+            Divider()
             
             if let menu = viewModel.selectedMenu {
                 Text(menu.name)
@@ -40,9 +43,25 @@ struct MenuPaymentView: View {
                     }
                 } label: {
                     Text("결제하기")
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white)
+                        .frame(width: 363, height: 42)
+                        .background(.brown)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
             } else {
                 Text("메뉴가 선택되지 않았습니다")
+            }
+        }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .tint(.black)
+                }
             }
         }
     }
