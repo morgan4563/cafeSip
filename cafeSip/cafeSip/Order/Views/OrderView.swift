@@ -29,7 +29,7 @@ struct OrderView: View {
             }
             .onChange(of: viewModel.scannedCode, { oldValue, newValue in
                 if let storeId = newValue, storeId != oldValue {
-                    viewModel.inputQRData(code: storeId)
+                    viewModel.storeId = storeId
                     Task {
                         let loadStoreSuccess = await viewModel.loadStore()
                         if loadStoreSuccess {
@@ -60,7 +60,7 @@ struct OrderView: View {
                 case "SelectMenuView":
                     SelectMenuView(viewModel: $viewModel, navigationViewModel: $navigationViewModel)
                 case "MenuPaymentView":
-                    MenuPaymentView(orderViewModel: $viewModel, navigationViewModel: $navigationViewModel)
+                    MenuPaymentView(viewModel: $viewModel, navigationViewModel: $navigationViewModel)
                 case "OrderStatusView":
                     OrderStatusView(orderViewModel: $viewModel, navigationViewModel: $navigationViewModel)
                 default:

@@ -24,8 +24,8 @@ class LoginViewModel {
     
     func createUser() async {
         await AuthManager.shared.createUser(email: email, password: password, userName: userName)
-        email = ""
-        password = ""
-        userName = ""
+        self.email = ""
+        self.password = ""
+        self.userName = ""
     }
 }

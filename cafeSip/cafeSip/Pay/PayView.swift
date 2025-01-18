@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PayView: View {
-    @Binding var viewModel: PayViewModel
+    @State var viewModel = PayViewModel()
     var body: some View {
         VStack {
             Text("잔액 : \(viewModel.balance)")
@@ -40,5 +40,5 @@ struct PayView: View {
 }
 
 #Preview {
-    PayView(viewModel: .constant(PayViewModel()))
+    PayView()
 }

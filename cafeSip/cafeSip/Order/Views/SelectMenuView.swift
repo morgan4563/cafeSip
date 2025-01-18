@@ -14,11 +14,12 @@ struct SelectMenuView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Order")
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundStyle(.black)
-                .padding()
+            HStack {
+                Text("Order")
+                    .font(.title)
+                    .fontWeight(.bold)
+                Text(viewModel.storeName)
+            }.padding()
             
             Divider()
             
