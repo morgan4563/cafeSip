@@ -14,7 +14,6 @@ struct Order: Identifiable, Codable {
     var customerName: String
     var orderTime: Date
     var status: String
-    var menuId: UUID
     var menuName: String
     var price: String
 }

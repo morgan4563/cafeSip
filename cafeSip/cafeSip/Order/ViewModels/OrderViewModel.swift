@@ -22,6 +22,41 @@ class OrderViewModel {
     
     var listener: ListenerRegistration?
     
+    var balance: Int
+    var userId: String
+    
+    init() {
+        let currentUser = AuthManager.shared.currentUser
+        self.balance = currentUser?.balance ?? 0
+        self.userId = currentUser?.id ?? ""
+    }
+    
+    func processPayment(price: Int, ownerId: String) async -> Bool {
+        guard balance >= price else { return false }
+        balance -= price
+        updateBalance()
+        await sendMoneyToStore(ownerId: ownerId, price: price)
+        return true
+    }
+    
+    func sendMoneyToStore(ownerId: String, price: Int) async {
+        do {
+            let owner = try await Firestore.firestore().collection("users").document(ownerId).getDocument(as: User.self)
+            let ownerBalance = owner.balance + price
+            try await Firestore.firestore().collection("users").document(ownerId).updateData(
+                ["balance": ownerBalance]
+            )
+        } catch {
+            print("ownerBalnce 수정 실패")
+        }
+    }
+    
+    func updateBalance() {
+        Firestore.firestore().collection("users").document(userId).updateData(
+            ["balance" : balance]
+        )
+    }
+    
     
     func inputQRData(code: String) {
         print(code)
@@ -76,5 +111,26 @@ class OrderViewModel {
     func stopOvserving() {
         listener?.remove()
         listener = nil
+    }
+    
+    func createOrder(menu: MenuItem, customerId: String, customerName: String) -> String? {
+        let orderId = UUID().uuidString
+        let orderData = Order(
+            id: orderId,
+            storeId: storeId,
+            customerId: customerId,
+            customerName: customerName,
+            orderTime: Date(),
+            status: "preparing",
+            menuName: menu.name,
+            price: menu.price
+        )
+        do {
+            try Firestore.firestore().collection("orders").document(orderId).setData(from: orderData)
+        } catch {
+            print("order 생성 실패")
+            return nil
+        }
+        return orderId
     }
 }

@@ -10,7 +10,6 @@ import SwiftUI
 struct SelectMenuView: View {
     @Binding var viewModel: OrderViewModel
     @Binding var navigationViewModel: OrderNavigationViewModel
-    @Binding var payViewModel: PayViewModel
     @Environment(\.dismiss) var dismiss
     var body: some View {
         VStack(alignment: .leading) {
@@ -72,5 +71,5 @@ struct SelectMenuView: View {
 }
 
 #Preview {
-    SelectMenuView(viewModel: .constant(OrderViewModel()), navigationViewModel: .constant(OrderNavigationViewModel()), payViewModel: .constant(PayViewModel()))
+    SelectMenuView(viewModel: .constant(OrderViewModel()), navigationViewModel: .constant(OrderNavigationViewModel()))
 }

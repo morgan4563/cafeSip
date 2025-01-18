@@ -13,7 +13,6 @@ struct OrderView: View {
     @State private var scannedCode: String?
     @State var orderViewModel = OrderViewModel()
     @State var navigationViewModel = OrderNavigationViewModel()
-    @Binding var payViewModel: PayViewModel
     
     var body: some View {
         NavigationStack(path: $navigationViewModel.navigationPath) {
@@ -59,9 +58,9 @@ struct OrderView: View {
                 switch value {
                     // storeRegistration
                 case "SelectMenuView":
-                    SelectMenuView(viewModel: $orderViewModel, navigationViewModel: $navigationViewModel, payViewModel: $payViewModel)
+                    SelectMenuView(viewModel: $orderViewModel, navigationViewModel: $navigationViewModel)
                 case "MenuPaymentView":
-                    MenuPaymentView(orderViewModel: $orderViewModel, payViewModel: $payViewModel, navigationViewModel: $navigationViewModel)
+                    MenuPaymentView(orderViewModel: $orderViewModel, navigationViewModel: $navigationViewModel)
                 case "OrderStatusView":
                     OrderStatusView(orderViewModel: $orderViewModel, navigationViewModel: $navigationViewModel)
                 default:
@@ -73,5 +72,5 @@ struct OrderView: View {
 }
 
 #Preview {
-    OrderView(payViewModel: .constant(PayViewModel()))
+    OrderView()
 }

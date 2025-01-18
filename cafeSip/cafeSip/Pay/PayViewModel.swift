@@ -9,44 +9,13 @@ import FirebaseFirestore
 
 @Observable
 class PayViewModel {
-    var balance = 0
-    var userName = "samepleName"
-    var userId = "sampleId"
+    var balance: Int
+    var userId: String
     
     init() {
-        if let currentUserData = AuthManager.shared.currentUser {
-            self.userName = currentUserData.userName
-            self.userId = currentUserData.id
-            self.balance = currentUserData.balance
-        }
-    }
-    
-    func processPayment(price: String, ownerId: String) async {
-        guard let price = Int(price) else {
-            print("price Int변형실패")
-            return
-        }
-        if self.balance > price {
-            balance -= price
-            updateBalance()
-            await sendMoneyToStore(ownerId: ownerId, price: price)
-            print("결제완료 남은 잔액 \(balance)")
-        } else {
-            print("잔액부족")
-        }
-    }
-    
-    func sendMoneyToStore(ownerId: String, price: Int) async {
-        do {
-            let owner = try await Firestore.firestore().collection("users").document(ownerId).getDocument(as: User.self)
-            var ownerBalance = owner.balance + price
-            print(owner.id)
-            try await Firestore.firestore().collection("users").document(ownerId).updateData(
-                ["balance": ownerBalance]
-            )
-        } catch {
-            print("ownerBalnce 수정 실패")
-        }
+        let currentUser = AuthManager.shared.currentUser
+        self.balance = currentUser?.balance ?? 0
+        self.userId = currentUser?.id ?? ""
     }
     
     func chargePaymoney(amount: Int) {
