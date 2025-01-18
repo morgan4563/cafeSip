@@ -57,6 +57,7 @@ class AuthManager {
             try Auth.auth().signOut()
             currentAuthUser = nil
             currentUser = nil
+            StoreManager.shared.currentStore = nil
         } catch {
             print("로그아웃 실패 \(error.localizedDescription)")
         }
