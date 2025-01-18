@@ -14,8 +14,8 @@ class OrderViewModel {
     var storeId = ""
     var storeName = ""
     var ownerId = ""
-    var menuItems = [MenuItem]()
-    var selectedMenu: MenuItem?
+    var menuItems = [MenuItem]() //
+    var selectedMenu: MenuItem? //
     
     var orderId = ""
     var orderStatus = ""
@@ -24,25 +24,60 @@ class OrderViewModel {
     
     var balance: Int
     var userId: String
+    var userName: String
     
-    var isScanning = false
-    var scannedCode: String?
+    var isScanning = false //
+    var scannedCode: String? //
     
     init() {
         let currentUser = AuthManager.shared.currentUser
         self.balance = currentUser?.balance ?? 0
         self.userId = currentUser?.id ?? ""
+        self.userName = currentUser?.userName ?? ""
     }
     
-    func processPayment(price: Int, ownerId: String) async -> Bool {
+    func processPayment(menu: MenuItem) async -> Bool {
+        // m
+        guard let price = Int(menu.price) else {
+            print("가격 변환 실패")
+            return false
+        }
+        
         guard balance >= price else { return false }
+        guard await sendMoneyToStore(price: price) else { return false }
+        guard let orderId = createOrder(menu: menu) else { return false }
+        
         balance -= price
         updateBalance()
-        await sendMoneyToStore(ownerId: ownerId, price: price)
+        
+        self.orderId = orderId
+        self.orderStatus = "preparing"
+        
         return true
     }
     
-    func sendMoneyToStore(ownerId: String, price: Int) async {
+    func createOrder(menu: MenuItem) -> String? {
+        let orderId = UUID().uuidString
+        let orderData = Order(
+            id: orderId,
+            storeId: storeId,
+            customerId: userId,
+            customerName: userName,
+            orderTime: Date(),
+            status: "preparing",
+            menuName: menu.name,
+            price: menu.price
+        )
+        do {
+            try Firestore.firestore().collection("orders").document(orderId).setData(from: orderData)
+        } catch {
+            print("order 생성 실패")
+            return nil
+        }
+        return orderId
+    }
+    
+    func sendMoneyToStore(price: Int) async -> Bool {
         do {
             let owner = try await Firestore.firestore().collection("users").document(ownerId).getDocument(as: User.self)
             let ownerBalance = owner.balance + price
@@ -51,7 +86,9 @@ class OrderViewModel {
             )
         } catch {
             print("ownerBalnce 수정 실패")
+            return false
         }
+        return true
     }
     
     func updateBalance() {
@@ -59,7 +96,6 @@ class OrderViewModel {
             ["balance" : balance]
         )
     }
-    
     
     func inputQRData(code: String) {
         self.storeId = code
@@ -116,24 +152,5 @@ class OrderViewModel {
         listener = nil
     }
     
-    func createOrder(menu: MenuItem, customerId: String, customerName: String) -> String? {
-        let orderId = UUID().uuidString
-        let orderData = Order(
-            id: orderId,
-            storeId: storeId,
-            customerId: customerId,
-            customerName: customerName,
-            orderTime: Date(),
-            status: "preparing",
-            menuName: menu.name,
-            price: menu.price
-        )
-        do {
-            try Firestore.firestore().collection("orders").document(orderId).setData(from: orderData)
-        } catch {
-            print("order 생성 실패")
-            return nil
-        }
-        return orderId
-    }
+    
 }

@@ -11,6 +11,7 @@ struct SelectMenuView: View {
     @Binding var viewModel: OrderViewModel
     @Binding var navigationViewModel: OrderNavigationViewModel
     @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Order")
