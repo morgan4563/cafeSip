@@ -12,7 +12,9 @@ class LoginViewModel {
     var email = ""
     var password = ""
     var userName = ""
+    
     var emailValidationMessage = ""
+    var passwordValidationMessage = ""
     
     func signIn() async {
         await AuthManager.shared.signIn(email: email, password: password)
@@ -34,6 +36,14 @@ class LoginViewModel {
     
     func setEmailValidationMessage() {
         emailValidationMessage = ""
+    }
+    
+    func setInvalidPasswordMessage() {
+        passwordValidationMessage = "비밀번호 형식이 올바르지 않습니다"
+    }
+    
+    func setPasswordValidationMessage() {
+        passwordValidationMessage = ""
     }
     
     func clearUserInput() {

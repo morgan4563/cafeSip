@@ -29,8 +29,8 @@ struct CompleteSignupView: View {
             Button {
                 Task {
                     await loginViewModel.createUser()
+                    loginNavigtionViewModel.goToLoginView()
                 }
-                loginNavigtionViewModel.goToLoginView()
             } label: {
                 Text("완료")
                     .fontWeight(.semibold)
