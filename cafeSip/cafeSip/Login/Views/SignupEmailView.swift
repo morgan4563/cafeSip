@@ -35,20 +35,31 @@ struct SignupEmailView: View {
             }.padding()
             
             Spacer()
-            
-            Button("다음") {
-                loginNavigtionViewModel.goToSignupPasswordView()
+            VStack {
+                Text(loginViewModel.emailValidationMessage)
+                    .foregroundStyle(.brown)
+                
+                Button("다음") {
+                    if loginViewModel.email.isValidEmail() {
+                        loginViewModel.setEmailValidationMessage()
+                        loginNavigtionViewModel.goToSignupPasswordView()
+                    } else {
+                        loginViewModel.setInvalidEmailMessage()
+                    }
+                }
+                .foregroundStyle(.white)
+                .frame(width: 363, height: 42)
+                .background(.brown)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
             }
             .fontWeight(.semibold)
-            .foregroundStyle(.white)
-            .frame(width: 363, height: 42)
-            .background(.brown)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
         }
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    loginViewModel.setEmailValidationMessage()
+                    loginViewModel.clearUserInput()
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.left")
