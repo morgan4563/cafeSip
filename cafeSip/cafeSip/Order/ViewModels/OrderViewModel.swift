@@ -25,6 +25,9 @@ class OrderViewModel {
     var balance: Int
     var userId: String
     
+    var isScanning = false
+    var scannedCode: String?
+    
     init() {
         let currentUser = AuthManager.shared.currentUser
         self.balance = currentUser?.balance ?? 0
@@ -59,21 +62,21 @@ class OrderViewModel {
     
     
     func inputQRData(code: String) {
-        print(code)
         self.storeId = code
     }
     
-    func loadStore() async {
+    func loadStore() async -> Bool {
         do {
             self.currentStore = try await Firestore.firestore().collection("stores").document(storeId).getDocument(as: Store.self)
-            // 추후 예외처리 다시 해주기
             self.storeId = currentStore?.id ?? ""
             self.storeName = currentStore?.name ?? ""
             self.ownerId = currentStore?.ownerId ?? ""
             self.menuItems = currentStore?.menuItems ?? [MenuItem]()
             print("loadStore 성공")
+            return true
         } catch {
             print("스토어 데이터 로드 실패")
+            return false
         }
     }
     

@@ -9,9 +9,7 @@ import SwiftUI
 import CodeScanner
 
 struct OrderView: View {
-    @State private var isScanning = false
-    @State private var scannedCode: String?
-    @State var orderViewModel = OrderViewModel()
+    @State var viewModel = OrderViewModel()
     @State var navigationViewModel = OrderNavigationViewModel()
     
     var body: some View {
@@ -22,47 +20,49 @@ struct OrderView: View {
                     .padding()
                 
                 Button("카메라로 QR스캔") {
-                    isScanning = true
+                    viewModel.isScanning = true
                 }
                 .foregroundStyle(.white)
                 .padding()
                 .background(Color.brown)
                 .cornerRadius(10)
             }
-            
-            .onChange(of: scannedCode, { oldValue, newValue in
-                if let code = newValue, code != oldValue {
-                    orderViewModel.inputQRData(code: code)
+            .onChange(of: viewModel.scannedCode, { oldValue, newValue in
+                if let storeId = newValue, storeId != oldValue {
+                    viewModel.inputQRData(code: storeId)
                     Task {
-                        await orderViewModel.loadStore()
+                        let loadStoreSuccess = await viewModel.loadStore()
+                        if loadStoreSuccess {
+                            navigationViewModel.goToSelectMenuView()
+                        } else {
+                            print("유효하지 않은 QR코드")
+                        }
                     }
-                    navigationViewModel.goToSelectMenuView()
                 }
             })
-            .sheet(isPresented: $isScanning) {
+            .sheet(isPresented: $viewModel.isScanning) {
                 CodeScannerView(
                     codeTypes: [.qr],
                     completion: { result in
                         switch result {
                         case .success(let scanResult):
-                            scannedCode = scanResult.string
-                            isScanning = false
+                            viewModel.scannedCode = scanResult.string
+                            viewModel.isScanning = false
                         case .failure(let error):
                             print("스캔실패: \(error.localizedDescription)")
-                            isScanning = false
+                            viewModel.isScanning = false
                         }
                     }
                 )
             }
             .navigationDestination(for: String.self) { value in
                 switch value {
-                    // storeRegistration
                 case "SelectMenuView":
-                    SelectMenuView(viewModel: $orderViewModel, navigationViewModel: $navigationViewModel)
+                    SelectMenuView(viewModel: $viewModel, navigationViewModel: $navigationViewModel)
                 case "MenuPaymentView":
-                    MenuPaymentView(orderViewModel: $orderViewModel, navigationViewModel: $navigationViewModel)
+                    MenuPaymentView(orderViewModel: $viewModel, navigationViewModel: $navigationViewModel)
                 case "OrderStatusView":
-                    OrderStatusView(orderViewModel: $orderViewModel, navigationViewModel: $navigationViewModel)
+                    OrderStatusView(orderViewModel: $viewModel, navigationViewModel: $navigationViewModel)
                 default:
                     Text("잘못된접근")
                 }
