@@ -34,6 +34,7 @@ struct cafeSipApp: App {
                 print("앱 비활성화 상태")
             case .background:
                 print("앱 백그라운드 전환 상태")
+                AuthManager.shared.saveCurrentUserDataOnBackground()
             default:
                 break
             }

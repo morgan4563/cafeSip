@@ -16,6 +16,10 @@ class AuthManager {
     var currentAuthUser: FirebaseAuth.User?
     var currentUser: User?
     
+    init() {
+        loadSavedCurrentUserData()
+    }
+    
     func createUser(email: String, password: String, userName: String) async {
         
         do {
@@ -58,6 +62,9 @@ class AuthManager {
             currentAuthUser = nil
             currentUser = nil
             StoreManager.shared.currentStore = nil
+            
+            clearLocalUserData()
+            print("로그아웃 성공")
         } catch {
             print("로그아웃 실패 \(error.localizedDescription)")
         }
@@ -71,7 +78,33 @@ class AuthManager {
             print("Failed to load CurrentUserData")
         }
     }
-    
-    
 }
 
+// 데이터 로컬 저장
+extension AuthManager {
+    func saveCurrentUserDataOnBackground() {
+        guard let currentUser = currentUser else { return }
+        do {
+            let encodeUser = try JSONEncoder().encode(currentUser)
+            UserDefaults.standard.set(encodeUser, forKey: "currentUser")
+            print("currentUser 데이터 로컬 저장 성공")
+        } catch {
+            print("currentUser 데이터 로컬 저장 실패 \(error.localizedDescription)")
+        }
+    }
+    
+    func loadSavedCurrentUserData() {
+        guard let userData = UserDefaults.standard.data(forKey: "currentUser") else { return }
+        do {
+            currentUser = try JSONDecoder().decode(User.self, from: userData)
+            print("currentUser 데이터 로컬에서 불러오기 성공")
+        } catch {
+            print("currentUser 데이터 로컬에 없거나, 불러오기 실패")
+        }
+    }
+    
+    func clearLocalUserData() {
+        UserDefaults.standard.removeObject(forKey: "currentUser")
+        print("로컬에서 currentUser 데이터 삭제성공")
+    }
+}
