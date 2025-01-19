@@ -18,7 +18,7 @@ struct CompleteSignupView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             
-            Text("\(loginViewModel.userName)님 로그인 페이지로 돌아가서 로그인을 진행해주세요.")
+            Text("\(loginViewModel.userName) 님 로그인 페이지로 돌아가서 로그인을 진행해주세요.")
                 .font(.callout)
                 .frame(maxWidth: .infinity,alignment: .leading)
                 .padding(.horizontal)
@@ -44,6 +44,6 @@ struct CompleteSignupView: View {
     }
 }
 
-//#Preview {
-//    CompleteSignupView(userName: .constant("닉네임"))
-//}
+#Preview {
+    CompleteSignupView(loginViewModel: .constant(LoginViewModel()), loginNavigtionViewModel: .constant(LoginNavigationViewModel()))
+}

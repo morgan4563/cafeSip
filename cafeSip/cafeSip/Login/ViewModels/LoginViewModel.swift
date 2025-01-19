@@ -9,12 +9,25 @@ import SwiftUI
 
 @Observable
 class LoginViewModel {
-    var email = ""
-    var password = ""
-    var userName = ""
+    private var loginModel: LoginModel = LoginModel()
     
     var emailValidationMessage = ""
     var passwordValidationMessage = ""
+    
+    var email: String {
+        get { loginModel.email }
+        set { loginModel.email = newValue }
+    }
+    
+    var password: String {
+        get { loginModel.password }
+        set { loginModel.password = newValue }
+    }
+    
+    var userName: String {
+        get { loginModel.userName }
+        set { loginModel.userName = newValue }
+    }
     
     func signIn() async {
         await AuthManager.shared.signIn(email: email, password: password)
@@ -22,7 +35,6 @@ class LoginViewModel {
         if let storeId = AuthManager.shared.currentUser?.storeId {
             await StoreManager.shared.loadCurrentStoreData(storeId: storeId)
         }
-        
     }
     
     func createUser() async {
@@ -47,8 +59,6 @@ class LoginViewModel {
     }
     
     func clearUserInput() {
-        self.email = ""
-        self.password = ""
-        self.userName = ""
+        loginModel.clear()
     }
 }

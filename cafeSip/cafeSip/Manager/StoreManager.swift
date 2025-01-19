@@ -13,6 +13,10 @@ class StoreManager {
     static let shared = StoreManager()
     var currentStore: Store?
     
+    func clearStoreData() {
+        currentStore = nil
+    }
+    
     func loadCurrentStoreData(storeId: String) async { // 분리필요
         do {
             self.currentStore = try await Firestore.firestore().collection("stores").document(storeId).getDocument(as: Store.self)

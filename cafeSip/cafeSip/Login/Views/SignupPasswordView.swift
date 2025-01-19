@@ -60,6 +60,7 @@ struct SignupPasswordView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
                     dismiss()
+                    loginViewModel.setPasswordValidationMessage()
                 } label: {
                     Image(systemName: "chevron.left")
                         .tint(.black)
@@ -69,6 +70,6 @@ struct SignupPasswordView: View {
     }
 }
 
-//#Preview {
-//    SignupPasswordView()
-//}
+#Preview {
+    SignupPasswordView(loginViewModel: .constant(LoginViewModel()), loginNavigtionViewModel: .constant(LoginNavigationViewModel()))
+}

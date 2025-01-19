@@ -70,6 +70,6 @@ struct SignupEmailView: View {
     }
 }
 
-//#Preview {
-//    
-//}
+#Preview {
+    SignupEmailView(loginViewModel: .constant(LoginViewModel()), loginNavigtionViewModel: .constant(LoginNavigationViewModel()))
+}

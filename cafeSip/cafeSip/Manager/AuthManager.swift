@@ -51,19 +51,19 @@ class AuthManager {
             currentAuthUser = result.user
             
             await loadCurrentUserData()
+            print("로그인 성공")
         } catch {
-            print("Failed to signIn")
+            print("로그인 실패")
         }
     }
     
     func signOut() {
         do {
             try Auth.auth().signOut()
+            clearLocalUserData()
             currentAuthUser = nil
             currentUser = nil
-            StoreManager.shared.currentStore = nil
-            
-            clearLocalUserData()
+            StoreManager.shared.clearStoreData()
             print("로그아웃 성공")
         } catch {
             print("로그아웃 실패 \(error.localizedDescription)")

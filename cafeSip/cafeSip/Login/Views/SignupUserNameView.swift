@@ -59,6 +59,6 @@ struct SignupUserNameView: View {
     }
 }
 
-//#Preview {
-//    SignupUserNameView(navigationPath: .constant(NavigationPath([""])))
-//}
+#Preview {
+    SignupUserNameView(loginViewModel: .constant(LoginViewModel()), loginNavigtionViewModel: .constant(LoginNavigationViewModel()))
+}
