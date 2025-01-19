@@ -12,13 +12,13 @@ class StoreRegisterViewModel {
     private var storeRegisterModel = StoreRegisterModel()
     
     var address: String {
-        get { storeRegisterModel.getAddressData() }
-        set { storeRegisterModel.setAddressData(newValue: newValue) }
+        get { storeRegisterModel.getAddress() }
+        set { storeRegisterModel.setAddress(newValue: newValue) }
     }
     
     var detailAddress: String {
-        get { storeRegisterModel.getAddressData() }
-        set { storeRegisterModel.setDetailAddressData(newValue: newValue) }
+        get { storeRegisterModel.getAddress() }
+        set { storeRegisterModel.setDetailAddress(newValue: newValue) }
     }
     
     var storeName: String {

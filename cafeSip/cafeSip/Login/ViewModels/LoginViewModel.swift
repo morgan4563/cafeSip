@@ -15,18 +15,18 @@ class LoginViewModel {
     var passwordValidationMessage = ""
     
     var email: String {
-        get { loginModel.email }
-        set { loginModel.email = newValue }
+        get { loginModel.getEmail() }
+        set { loginModel.setEmail(newValue: newValue) }
     }
     
     var password: String {
-        get { loginModel.password }
-        set { loginModel.password = newValue }
+        get { loginModel.getPassword() }
+        set { loginModel.setPassword(newValue: newValue) }
     }
     
     var userName: String {
-        get { loginModel.userName }
-        set { loginModel.userName = newValue }
+        get { loginModel.getUserName() }
+        set { loginModel.setUserName(newValue: newValue) }
     }
     
     func signIn() async {

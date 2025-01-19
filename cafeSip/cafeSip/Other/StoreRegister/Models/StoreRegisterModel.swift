@@ -16,16 +16,16 @@ struct StoreRegisterModel {
         self.storeName = ""
     }
     
-    func getAddressData() -> String {
+    func getAddress() -> String {
         return address
     }
-    mutating func setAddressData(newValue: String) {
+    mutating func setAddress(newValue: String) {
         self.address = newValue
     }
-    func getDetailAddressData() -> String {
+    func getDetailAddress() -> String {
         return detailAddress
     }
-    mutating func setDetailAddressData(newValue: String) {
+    mutating func setDetailAddress(newValue: String) {
         self.detailAddress = newValue
     }
     func getStoreName() -> String {
