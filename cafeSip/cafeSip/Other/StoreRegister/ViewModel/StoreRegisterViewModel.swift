@@ -9,9 +9,22 @@ import NMapsMap
 
 @Observable
 class StoreRegisterViewModel {
-    var address = "주소 정보를 수집중입니다."
-    var detailAddress = ""
-    var storeName = ""
+    private var storeRegisterModel = StoreRegisterModel()
+    
+    var address: String {
+        get { storeRegisterModel.getAddressData() }
+        set { storeRegisterModel.setAddressData(newValue: newValue) }
+    }
+    
+    var detailAddress: String {
+        get { storeRegisterModel.getAddressData() }
+        set { storeRegisterModel.setDetailAddressData(newValue: newValue) }
+    }
+    
+    var storeName: String {
+        get { storeRegisterModel.getStoreName() }
+        set { storeRegisterModel.setStoreName(newValue: newValue) }
+    }
     
     func getRoadAddress(from: NMGLatLng) {
         let reverseGeocodingResponse = ReverseGeocodingRequest(position: from)
