@@ -35,3 +35,11 @@ struct User: Codable {
     var storeId: String?
 }
 
+struct MenuItem: Codable, Identifiable {
+    var id = UUID()
+    var name: String
+    var description: String
+    var price: String
+}
+
+
