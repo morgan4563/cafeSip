@@ -21,7 +21,6 @@ class AuthManager {
     }
     
     func createUser(email: String, password: String, userName: String) async {
-        
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             

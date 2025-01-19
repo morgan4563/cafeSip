@@ -9,15 +9,30 @@ import FirebaseFirestore
 
 @Observable
 class StoreManagementViewModel {
-    var newMenuName = ""
-    var newMenuDescription = ""
-    var newMenuPrice = ""
-    
+    private var storeManagementModel = StoreManagementModel()
     var showQRView = false
-    
     var listener: ListenerRegistration?
-    var orders: [Order] = []
     var completedOrders: Set<String> = []
+    
+    var newMenuName: String {
+        get { storeManagementModel.getNewMenuName() }
+        set { storeManagementModel.setNewMenuName(newValue) }
+    }
+    
+    var newMenuDescription: String {
+        get { storeManagementModel.getNewMenuDescription() }
+        set { storeManagementModel.setNewMenuDescription(newValue) }
+    }
+    
+    var newMenuPrice: String {
+        get { storeManagementModel.getNewMenuPrice() }
+        set { storeManagementModel.setNewMenuPrice(newValue) }
+    }
+    
+    var orders: [Order] {
+        get { storeManagementModel.getOrders() }
+        set { storeManagementModel.setOrders(newValue) }
+    }
     
     func addMenuItem(storeId: String) {
         guard newMenuName != "" && newMenuDescription != "" && newMenuPrice != "" else {

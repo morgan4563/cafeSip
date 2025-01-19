@@ -17,7 +17,7 @@ class StoreManager {
         currentStore = nil
     }
     
-    func loadCurrentStoreData(storeId: String) async { // 분리필요
+    func loadCurrentStoreData(storeId: String) async {
         do {
             self.currentStore = try await Firestore.firestore().collection("stores").document(storeId).getDocument(as: Store.self)
             print("스토어 데이터 로드 성공")
