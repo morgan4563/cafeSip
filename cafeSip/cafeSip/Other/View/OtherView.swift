@@ -52,7 +52,6 @@ struct OtherView: View {
                             await StoreManager.shared.loadCurrentStoreData(storeId: storeId)
                         }
                     }
-                    //getStoreData삭제
                     otherNavigationViewModel.goToStoreManagementView()
                 } label: {
                     Text("\(Image(systemName: "house.circle.fill"))매장관리")

@@ -8,15 +8,19 @@
 import SwiftUI
 
 struct PayView: View {
-    @State var viewModel = PayViewModel()
+    @State var payViewModel = PayViewModel()
     var body: some View {
         VStack {
-            Text("잔액 : \(viewModel.balance)")
-                .font(.headline)
+            if payViewModel.isLoading {
+                Text("잔액 : \(payViewModel.balance)")
+                    .font(.headline)
+            } else {
+                ProgressView("잔액 로드중")
+            }
             
             Button {
                 Task {
-                    if await viewModel.chargePaymoney(amount: 1000) {
+                    if await payViewModel.chargePaymoney(amount: 1000) {
                         print("정상 충전됨")
                     } else {
                         print("충전실패 에러")
@@ -31,11 +35,13 @@ struct PayView: View {
             }
         }.onAppear {
             Task {
-                await viewModel.getBalance()
+                payViewModel.loadUser()
+                payViewModel.isLoading = await payViewModel.getBalance()
             }
         }
     }
 }
+
 
 #Preview {
     PayView()

@@ -9,13 +9,25 @@ import FirebaseFirestore
 
 @Observable
 class PayViewModel {
-    var balance: Int
-    var userId: String
+    var payModel = PayModel()
+    var isLoading = false
     
-    init() {
-        let currentUser = AuthManager.shared.currentUser
-        self.balance = currentUser?.balance ?? 0
-        self.userId = currentUser?.id ?? ""
+    var balance: Int {
+        get { payModel.getBalance() }
+        set { payModel.setBalance(newBalance: newValue) }
+    }
+    
+    var userId: String {
+        get { payModel.getUserId() }
+        set { payModel.setUserId(id: newValue) }
+    }
+
+    func loadUser() {
+        if let currentUser = AuthManager.shared.currentUser {
+            isLoading = true
+            self.balance = currentUser.balance
+            self.userId = currentUser.id
+        }
     }
     
     func chargePaymoney(amount: Int) async -> Bool {
@@ -34,7 +46,7 @@ class PayViewModel {
     func getBalance() async -> Bool {
         do {
             let user = try await Firestore.firestore().collection("users").document(userId).getDocument(as: User.self)
-            balance = user.balance
+            self.balance = user.balance
         } catch {
             print("balanceData 수신 실패")
             return false
