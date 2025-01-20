@@ -27,19 +27,6 @@ struct OrderView: View {
                 .background(Color.brown)
                 .cornerRadius(10)
             }
-            .onChange(of: viewModel.scannedCode, { oldValue, newValue in
-                if let storeId = newValue, storeId != oldValue {
-                    viewModel.storeId = storeId
-                    Task {
-                        let loadStoreSuccess = await viewModel.loadStore()
-                        if loadStoreSuccess {
-                            navigationViewModel.goToSelectMenuView()
-                        } else {
-                            print("유효하지 않은 QR코드")
-                        }
-                    }
-                }
-            })
             .sheet(isPresented: $viewModel.isScanning) {
                 CodeScannerView(
                     codeTypes: [.qr],
@@ -55,6 +42,17 @@ struct OrderView: View {
                     }
                 )
             }
+            .onChange(of: viewModel.scannedCode, { _, newValue in
+                viewModel.storeId = newValue
+                Task {
+                    let loadStoreSuccess = await viewModel.loadStore()
+                    if loadStoreSuccess {
+                        navigationViewModel.goToSelectMenuView()
+                    } else {
+                        print("유효하지 않은 QR코드")
+                    }
+                }
+            })
             .navigationDestination(for: String.self) { value in
                 switch value {
                 case "SelectMenuView":

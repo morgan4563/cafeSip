@@ -34,6 +34,7 @@ struct MenuPaymentView: View {
                 
                 Button {
                     Task {
+                        // 커런트 유저 정보 불러오는 기능 필요
                         let processResult = await viewModel.processPayment(menu: menu)
                         if processResult {
                             navigationViewModel.goToOrderStatusView()

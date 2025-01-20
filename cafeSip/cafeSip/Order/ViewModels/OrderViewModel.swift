@@ -10,35 +10,67 @@ import FirebaseFirestore
 
 @Observable
 class OrderViewModel {
-    var storeId = ""
-    var storeName = ""
-    var ownerId = ""
-    var menuItems = [MenuItem]()
-    var selectedMenu: MenuItem?
-    
-    var orderId = ""
-    var orderStatus = ""
-    
-    var listener: ListenerRegistration?
-    
-    var balance: Int
-    var userId: String
-    var userName: String
+    var orderModel = OrderModel()
     
     var isScanning = false
-    var scannedCode: String?
+    var scannedCode: String = ""
     
-    init() {
-        let currentUser = AuthManager.shared.currentUser
-        self.balance = currentUser?.balance ?? 0
-        self.userId = currentUser?.id ?? ""
-        self.userName = currentUser?.userName ?? ""
+    var storeId: String {
+        get { orderModel.getStoreId() }
+        set { orderModel.setStoreId(id: newValue) }
     }
+    
+    var storeName: String {
+        get { orderModel.getStoreName() }
+        set { orderModel.setStoreName(name: newValue) }
+    }
+    
+    var ownerId: String {
+        get { orderModel.getOwnerId() }
+        set { orderModel.setOwnerId(id: newValue) }
+    }
+    
+    var menuItems: [MenuItem] {
+        get { orderModel.getMenuItems() }
+        set { orderModel.setMenuItems(items: newValue) }
+    }
+    
+    var selectedMenu: MenuItem? {
+        get { orderModel.getSelectedMenu() }
+        set { orderModel.setSelectedMenu(menu: newValue) }
+    }
+    
+    var userId: String {
+        get { orderModel.getUserId() }
+        set { orderModel.setUserId(id: newValue) }
+    }
+
+    var userName: String {
+        get { orderModel.getUserName() }
+        set { orderModel.setUserName(name: newValue) }
+    }
+    
+    var balance: Int {
+        get { orderModel.getBalance() }
+        set { orderModel.setBalance(balance: newValue) }
+    }
+    
+    var orderId: String {
+        get { orderModel.getOrderId() }
+        set { orderModel.setOrderId(id: newValue) }
+    }
+    
+    var orderStatus: String {
+        get { orderModel.getOrderStatus() }
+        set { orderModel.setOrderStatus(status: newValue) }
+    }
+    
+    var listener: ListenerRegistration?
+
     
     func loadStore() async -> Bool {
         do {
             let currentStore = try await Firestore.firestore().collection("stores").document(storeId).getDocument(as: Store.self)
-            self.storeId = currentStore.id
             self.storeName = currentStore.name
             self.ownerId = currentStore.ownerId
             self.menuItems = currentStore.menuItems ?? [MenuItem]()
@@ -51,18 +83,22 @@ class OrderViewModel {
     }
     
     func processPayment(menu: MenuItem) async -> Bool {
+        guard loadUser() else {
+            print("유저 정보 수집 실패")
+            return false
+        }
         guard let price = Int(menu.price) else {
             print("가격 변환 실패")
             return false
         }
         
         guard await getBalance() else { return false }
-        guard balance >= price else { return false }
+        guard self.balance >= price else { return false }
         guard await sendMoneyToStore(price: price) else { return false }
-        guard let orderId = createOrder(menu: menu) else { return false }
-        
-        balance -= price
+        self.balance -= price
         updateBalance()
+        
+        guard let orderId = createOrder(menu: menu) else { return false }
         
         self.orderId = orderId
         self.orderStatus = "preparing"
@@ -70,10 +106,19 @@ class OrderViewModel {
         return true
     }
     
+    func loadUser() -> Bool {
+        guard let currentUser = AuthManager.shared.currentUser else {
+            return false
+        }
+        self.userId = currentUser.id
+        self.userName = currentUser.userName
+        return true
+    }
+    
     func getBalance() async -> Bool {
         do {
             let user = try await Firestore.firestore().collection("users").document(userId).getDocument(as: User.self)
-            balance = user.balance
+            self.balance = user.balance
         } catch {
             print("balanceData 수신 실패")
             return false
