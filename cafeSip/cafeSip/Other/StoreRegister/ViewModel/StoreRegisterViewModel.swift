@@ -17,7 +17,7 @@ class StoreRegisterViewModel {
     }
     
     var detailAddress: String {
-        get { storeRegisterModel.getAddress() }
+        get { storeRegisterModel.getDetailAddress() }
         set { storeRegisterModel.setDetailAddress(newValue: newValue) }
     }
     
